@@ -48,7 +48,7 @@ class Details extends Component {
 
         </div>
         <div className="col-md-6">
-          <div className="">
+          <div className="text-center">
             <QRCodeContainer currentListId={this.state.currentListId} qrSeed={this.state.QRSeed}/>
           </div>
         </div>
