@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom'
 import List from './components/List'
 import Header from './components/Header'
+import Details from './components/Details'
 
 const App = () => (
   <Router>
@@ -14,6 +15,7 @@ const App = () => (
         <div className="row">
           <div className="col-12">
             <Route exact path="/" component={List} />
+            <Route path="/user/:userId" component={Details} />
           </div>
         </div>
       </div>
