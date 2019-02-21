@@ -4,16 +4,20 @@ import {
   Route,
 } from 'react-router-dom'
 import List from './components/List'
+import Header from './components/Header'
 
 const App = () => (
   <Router>
-    <div className="container">
-      <div className="row">
-        <div className="col-12">
-          <Route exact path="/" component={List} />
+    <React.Fragment>
+      <Header/>
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <Route exact path="/" component={List} />
+          </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   </Router>
 );
 

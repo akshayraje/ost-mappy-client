@@ -6,7 +6,7 @@ class Card extends Component {
       const user = this.props.user,
             colClass = this.props.colClass ? this.props.colClass : 'col-md-3';
         return (
-          <div className={colClass+' py-2'}>
+          <div className={`${colClass} py-2`}>
             <div className="card">
               <svg className="card-img-top" data-jdenticon-value={user._id}></svg>
               <div className="card-body">
