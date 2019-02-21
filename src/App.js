@@ -1,51 +1,20 @@
-import React, { Component } from 'react';
-import Card from './components/Card'
-import './App.css';
-import axios from 'axios';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom'
+import List from './components/List'
 
-class App extends Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      error : null,
-      isLoaded : false,
-      users : []
-    };
-  }
-
-  componentDidMount(){
-    axios.get('http://172.16.0.223:4040/api/users')
-      .then(res => {
-        const users = res.data['users'];
-        this.setState({
-          isLoaded : true,
-          users
-        })
-      })
-      .catch(err => {
-        this.setState({
-          error : err,
-          isLoaded : true,
-        })
-      })
-  }
-
-  render() {
-    if (this.state.error) {
-      return <div>Error: {this.state.error.message}</div>;
-    } else if (!this.state.isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-        <div className="row p-4">
-              {this.state.users.map(user => (
-                 <Card key={user._id} user={user}/>
-              ))}
+const App = () => (
+  <Router>
+    <div className="container">
+      <div className="row">
+        <div className="col-12">
+          <Route exact path="/" component={List} />
         </div>
-      );
-    }
-  }
-}
+      </div>
+    </div>
+  </Router>
+);
 
 export default App;
