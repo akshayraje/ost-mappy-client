@@ -3,6 +3,7 @@ import QRCode from 'qrcode.react';
 import DataDefinition from '../constants/DataDefinition'
 
 class Details extends Component {
+
   constructor(props){
     super(props);
     this.onClick = this.onClick.bind(this);
@@ -11,6 +12,7 @@ class Details extends Component {
       currentListId : null,
     };
   }
+
   onClick( event ) {
     let id = event.target.id,
         data = DataDefinition[id];
@@ -19,6 +21,7 @@ class Details extends Component {
       QRSeed : data
     })
   }
+
   render() {
     return (
         <React.Fragment>
@@ -29,17 +32,11 @@ class Details extends Component {
           </div>
           <div className="row text-center">
             <div className="text-center w-100">
-              <button className="btn btn-primary" id="listItem1" onClick={this.onClick}>
+              <button className="btn btn-primary mx-2" id="listItem1" onClick={this.onClick}>
                 List item 1
               </button>
-              <button className="btn btn-primary" id="listItem2" onClick={this.onClick}>
+              <button className="btn btn-primary mx-2" id="listItem2" onClick={this.onClick}>
                 List item 2
-              </button>
-              <button className="btn btn-primary" id="listItem3" onClick={this.onClick}>
-                List item 3
-              </button>
-              <button className="btn btn-primary" id="listItem4" onClick={this.onClick}>
-                List item 4
               </button>
             </div>
           </div>
