@@ -1,23 +1,29 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { toSvg } from 'jdenticon';
+import jdenticon from 'jdenticon';
 
 class Card extends Component {
+
+    constructor(props){
+        super(props);
+        this.colClass = this.props.colClass || 'col-lg-3 col-sm-6';
+    }
+
+    componentDidMount(){
+        jdenticon();
+    }
+
     render() {
-      const user = this.props.user,
-            colClass = this.props.colClass ? this.props.colClass : 'col-md-3';
-        return (
-          <div className={`${colClass} py-2`}>
-            <Link to={`/user/${user._id}`}>
-              <div className="card">
-                <svg className="card-img-top" data-jdenticon-value={user._id}></svg>
+      return (
+          <div className={`${this.colClass} py-2`}>
+              <div className="card shadow">
+                <svg className="card-img-top" data-jdenticon-value={this.props.user._id}></svg>
                 <div className="card-body">
-                  <h5 className="card-title">{user.username}</h5>
-                  <p className="card-text">{user.mobile_number}</p>
-                  <p className="card-text">{user.description}</p>
+                  <h5 className="card-title">{this.props.user.username}</h5>
+                  <p className="card-text">Phone: {this.props.user.mobile_number}</p>
+                  <Link className="card-link" to={`/user/${this.props.user._id}`}>Get QR Codes</Link>
                 </div>
               </div>
-            </Link>
           </div>
         );
     }

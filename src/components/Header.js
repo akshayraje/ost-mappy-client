@@ -1,16 +1,17 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
-class Header extends React.Component{
-  render(){
-    return (
-      <React.Fragment>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <a className="nav-link" href="/">Home</a>
+const Header = () => (
+    <React.Fragment>
+        <nav className="navbar navbar-dark bg-dark">
+            <Link className="navbar-brand" to="/">OST Mappy Client</Link>
+            <ul className="navbar-nav mr-auto">
+                <li className="nav-item">
+                    <Link className="nav-link" to="/">Home</Link>
+                </li>
+            </ul>
         </nav>
-      </React.Fragment>
-
-    )
-  }
-}
+    </React.Fragment>
+);
 
 export default  Header;

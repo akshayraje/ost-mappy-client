@@ -14,7 +14,7 @@ class List extends Component {
   }
 
   componentDidMount(){
-    axios.get('http://172.16.0.223:4040/api/users')
+    axios.get('http://localhost:4040/api/users')
       .then(res => {
         const users = res.data['users'];
         this.setState({

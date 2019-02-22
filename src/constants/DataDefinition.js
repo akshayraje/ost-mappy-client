@@ -3,7 +3,7 @@ const dataMap = {
       data_defination: "Transfer",
       data_defination_version: "1.0.0",
       rule_name: "ok",
-      rule_method_name: "ok",
+      rule_method_name: "directTransfers",
       rule_parameters: [],
       token_id: 100
     },

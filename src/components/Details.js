@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import QRCodeContainer from './QRCodeContainer'
-import dataMap from '../constants'
+import QRCode from 'qrcode.react';
+import DataDefinition from '../constants/DataDefinition'
 
 class Details extends Component {
   constructor(props){
@@ -13,7 +13,7 @@ class Details extends Component {
   }
   onClick( event ) {
     let id = event.target.id,
-        data = dataMap[id];
+        data = DataDefinition[id];
     this.setState({
       currentListId : id,
       QRSeed : data
@@ -21,38 +21,29 @@ class Details extends Component {
   }
   render() {
     return (
-      <div className="row pt-4">
-        <div className="col-md-6">
+        <React.Fragment>
+          <div className="row">
+            <div className="text-center w-100" style={{height: '350px'}}>
+            {this.state.QRSeed && <QRCode className="p-4" size={350} value={JSON.stringify(this.state.QRSeed)}/>}
+            </div>
+          </div>
           <div className="row text-center">
-            <div className="col-12 py-2">
+            <div className="text-center w-100">
               <button className="btn btn-primary" id="listItem1" onClick={this.onClick}>
                 List item 1
               </button>
-            </div>
-            <div className="col-12 py-2">
               <button className="btn btn-primary" id="listItem2" onClick={this.onClick}>
                 List item 2
               </button>
-            </div>
-            <div className="col-12 py-2">
               <button className="btn btn-primary" id="listItem3" onClick={this.onClick}>
                 List item 3
               </button>
-            </div>
-            <div className="col-12 py-2">
               <button className="btn btn-primary" id="listItem4" onClick={this.onClick}>
                 List item 4
               </button>
             </div>
           </div>
-
-        </div>
-        <div className="col-md-6">
-          <div className="text-center">
-            <QRCodeContainer currentListId={this.state.currentListId} qrSeed={this.state.QRSeed}/>
-          </div>
-        </div>
-      </div>
+        </React.Fragment>
     );
   }
 }
