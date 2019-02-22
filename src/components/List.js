@@ -31,7 +31,7 @@ class List extends Component {
   }
 
   render() {
-    if( this.state.error ) return <div>Error: {this.state.error.message}</div>;
+    if( this.state.error ) return <div className="alert alert-danger mt-3">Error: {this.state.error.message}</div>;
     if (!this.state.isLoaded ) return <div>Loading...</div>;
 
     return (
