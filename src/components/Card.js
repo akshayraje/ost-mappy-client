@@ -21,7 +21,9 @@ class Card extends Component {
                 <div className="card-body">
                   <h5 className="card-title">{this.props.user.username}</h5>
                   <p className="card-text">Phone: {this.props.user.mobile_number}</p>
-                  <Link className="card-link" to={`/user/${this.props.user._id}`}>Get QR Codes</Link>
+                  { this.props.user.token_holder_address ?
+                    <Link className="card-link" to={`/user/${this.props.user._id}`}>Get QR Codes</Link> :
+                    <span className="text-black-50">User not setup</span> }
                 </div>
               </div>
           </div>

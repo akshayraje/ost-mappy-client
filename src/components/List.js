@@ -31,19 +31,16 @@ class List extends Component {
   }
 
   render() {
-    if (this.state.error) {
-      return <div>Error: {this.state.error.message}</div>;
-    } else if (!this.state.isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-        <div className="row p-4">
-          {this.state.users.map(user => (
-            <Card key={user._id} user={user}/>
-          ))}
-        </div>
-      );
-    }
+    if( this.state.error ) return <div>Error: {this.state.error.message}</div>;
+    if (!this.state.isLoaded ) return <div>Loading...</div>;
+
+    return (
+      <div className="row p-4">
+        {this.state.users.map(user => (
+          <Card key={user._id} user={user}/>
+        ))}
+      </div>
+    );
   }
 }
 
