@@ -8,7 +8,6 @@ class Details extends Component {
   constructor(props){
     super(props);
     this.onClick = this.onClick.bind(this);
-    this.setState = this.setState.bind(this);
     this.state = {
       currentListId : null,
       user : null
@@ -21,7 +20,6 @@ class Details extends Component {
         this.setState({
           user : res.data
         });
-        console.log(this.state);
       })
       .catch(err => {
 
@@ -40,22 +38,22 @@ class Details extends Component {
   }
 
   render() {
-    console.log(this.state.QRSeed);
     return (
         <React.Fragment>
           <div className="row">
             <div className="text-center w-100" style={{height: '350px'}}>
-            {this.state.QRSeed && <QRCode className="p-4" size={350} value={JSON.stringify(this.state.QRSeed)}/>}
+            {
+              this.state.QRSeed ?
+                  <QRCode className="p-4" size={350} value={JSON.stringify(this.state.QRSeed)}/> :
+                  <p className="p-4 display-4 text-muted" style={{height: '350px'}}>Select an action to get QR code</p>
+            }
             </div>
           </div>
           <div className="row text-center">
             <div className="text-center w-100">
-              <button className="btn btn-primary mx-2" id="directTransfers" onClick={this.onClick}>
-                Direct Transfers
-              </button>
-              <button className="btn btn-primary mx-2" id="pay" onClick={this.onClick}>
-                Pay
-              </button>
+              {DataDefinition.map((action, index) => (
+                  <button key={`k-${index}`} className="btn btn-primary mx-2" id={index} onClick={this.onClick}>{action.rule_name}</button>
+              ))}
             </div>
           </div>
         </React.Fragment>
