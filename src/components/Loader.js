@@ -1,7 +1,8 @@
 import React from 'react';
+import { ReactComponent as LoaderIcon } from './../assets/images/loader.svg';
 
 const Loader = (props) => (
-  <div className="alert alert-secondary mt-3">{props.message}</div>
+  <LoaderIcon/>
 );
 
 const Error = (props) => (

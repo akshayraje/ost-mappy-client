@@ -57,13 +57,12 @@ class Details extends Component {
 
   render() {
     if( this.state.error ) return <Error message={this.state.error.message} />;
-    if (!this.state.isLoaded ) return <Loader message="Loading..." />;
+    if (!this.state.isLoaded ) return <div className="p-4" ><Loader /></div>;
     return (
         <React.Fragment>
           <div className="row">
-            { !this.state.isLoaded ? <Loader message="Loading..." /> :''}
             <div className="text-center w-100" style={{height: '350px'}}>
-            {
+              {
               this.state.QRSeed ?
                   <QRCode className="p-4" size={350} value={JSON.stringify(this.state.QRSeed)}/> :
                   <p className="p-4 display-4 text-muted" style={{height: '350px'}}>Select an action to get QR code</p>

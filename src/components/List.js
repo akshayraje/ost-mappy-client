@@ -13,7 +13,7 @@ import { Loader, Error } from './Loader';
 /*
  * Module constants
  */
-const LIMIT = 3;
+const LIMIT = 4;
 
 class List extends Component {
 
@@ -41,24 +41,22 @@ class List extends Component {
     });
     axios.get(`http://localhost:4040/api/users?limit=${LIMIT}&skip=${skip}`)
       .then(res => {
-        setTimeout(()=>{
-          const users = res.data['users'];
+        const users = res.data['users'];
+        this.setState({
+          isLoaded : true,
+          hasPrevious: (skip > 0)
+        });
+        if( users.length > 0 ) {
+          this.skip = skip;
           this.setState({
-            isLoaded : true,
-            hasPrevious: (skip > 0)
+            users,
+            hasNext : !(users.length < LIMIT || users.length === 0)
           });
-          if( users.length > 0 ) {
-            this.skip = skip;
-            this.setState({
-              users,
-              hasNext : !(users.length < LIMIT || users.length === 0)
-            });
-          } else {
-            this.setState({
-              hasNext : false,
-            });
-          }
-        }, 500);
+        } else {
+          this.setState({
+            hasNext : false,
+          });
+        }
       })
       .catch(err => {
         this.setState({
@@ -85,14 +83,14 @@ class List extends Component {
 
     return (
       <div className="p-4">
-        { !this.state.isLoaded ? <Loader message="Loading..." /> :''}
+        { !this.state.isLoaded ? <Loader/> :''}
         <div className="row">
           {this.state.users.map(user => (
             <Card key={user._id} user={user}/>
           ))}
         </div>
         <nav aria-label="User navigation">
-          <ul className="pagination pt-3">
+          <ul className="pagination justify-content-end pt-3">
             <li className={`page-item ${!this.state.hasPrevious ? 'disabled' : ''}` }>
               <span className="page-link" onClick={this.previous}>&laquo;</span>
             </li>
