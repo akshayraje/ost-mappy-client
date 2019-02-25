@@ -1,20 +1,22 @@
 const dataMap = [
     {
-      data_defination: "transaction",
-      rule_name: "Direct Transfer",
-      token_id: "1053",
-      rule_method_name: "directTransfers",
-      rule_parameters: {
-        amounts: ["1"]
+      dd: "TX",
+      ddv: "1.1.0",
+      d :{
+        rn : "name",
+        ads : [],
+        ams : ["1"],
+        tid : 1053
       }
     },
     {
-      data_defination: "transaction",
-      rule_name: "Pay",
-      token_id: "1053",
-      rule_method_name: "pay",
-      rule_parameters: {
-        amounts: ["1"]
+      dd: "TX2",
+      ddv: "1.2.0",
+      d :{
+        rn : "name2",
+        ads : [],
+        ams : ["1"],
+        tid : 1054
       }
     }
 ];

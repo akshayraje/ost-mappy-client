@@ -30,7 +30,7 @@ class Details extends Component {
     let id = event.target.id,
         data = DataDefinition[id],
         address = this.state.user && this.state.user.token_holder_address;
-    data.rule_parameters['addresses'] = [address];
+    data.d['ads'] = [address];
     this.setState({
       currentListId : id,
       QRSeed : data
@@ -52,7 +52,7 @@ class Details extends Component {
           <div className="row text-center">
             <div className="text-center w-100">
               {DataDefinition.map((action, index) => (
-                  <button key={`k-${index}`} className="btn btn-primary mx-2" id={index} onClick={this.onClick}>{action.rule_name}</button>
+                  <button key={`k-${index}`} className="btn btn-primary mx-2" id={index} onClick={this.onClick}>{action.d.rn}</button>
               ))}
             </div>
           </div>
