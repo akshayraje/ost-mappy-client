@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and deployed on [Firebase Hosting](https://facebook.github.io/create-react-app/docs/deployment#firebase-https-firebasegooglecom).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and deployed at [ost-mappy-client.firebaseapp.com](https://ost-mappy-client.firebaseapp.com/).
 
 ## Available Scripts
 
