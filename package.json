@@ -2,10 +2,8 @@
   "name": "ost-mappy-client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://akshayraje.github.io/ost-mappy-client",
   "dependencies": {
     "axios": "^0.18.0",
-    "gh-pages": "^2.0.1",
     "jdenticon": "^2.1.1",
     "qrcode.react": "^0.9.3",
     "react": "^16.8.2",
@@ -15,7 +13,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "firebase deploy",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
