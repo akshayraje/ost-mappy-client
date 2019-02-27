@@ -28,7 +28,7 @@ class Details extends Component {
     this.setState({
       isLoaded : false,
     });
-    axios.get('http://localhost:4040/api/users/'+this.props.match.params.userId)
+    axios.get(`https://s5-mappy.stagingost.com/api/users/${this.props.match.params.userId}/ost-users`)
       .then(res => {
         this.setState({
           user : res.data,
@@ -45,13 +45,13 @@ class Details extends Component {
 
   onClick( event ) {
     let id = event.target.id,
-        data = JSON.parse(JSON.stringify(DataDefinition[id])),
-        address = this.state.user && this.state.user.token_holder_address;
-    data.d['ads'] = [address];
-    delete data['_label'];
+        QRSeed = JSON.parse(JSON.stringify(DataDefinition[id]));
+    QRSeed.d['ads'] = [this.state.user.token_holder_address];
+    QRSeed.d['tid'] = [this.state.user.token_id];
+    delete QRSeed['_label'];
     this.setState({
       currentListId : id,
-      QRSeed : data
+      QRSeed
     });
   }
 

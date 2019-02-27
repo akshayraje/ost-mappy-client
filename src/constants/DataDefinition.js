@@ -6,8 +6,7 @@ const dataMap = [
       d :{
         rn : "directTransfers",
         ads : [],
-        ams : ["1"],
-        tid : 1053
+        ams : ["1"]
       }
     },
     {
@@ -17,8 +16,7 @@ const dataMap = [
       d :{
         rn : "pay",
         ads : [],
-        ams : ["1"],
-        tid : 1054
+        ams : ["1"]
       }
     }
 ];

@@ -13,7 +13,7 @@ import { Loader, Error } from './Loader';
 /*
  * Module constants
  */
-const LIMIT = 4;
+const LIMIT = 8;
 
 class List extends Component {
 
@@ -39,7 +39,7 @@ class List extends Component {
     this.setState({
       isLoaded : false,
     });
-    axios.get(`http://localhost:4040/api/users?limit=${LIMIT}&skip=${skip}`)
+    axios.get(`https://s5-mappy.stagingost.com/api/users?limit=${LIMIT}&skip=${skip}`)
       .then(res => {
         const users = res.data['users'];
         this.setState({
