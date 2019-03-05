@@ -47,7 +47,7 @@ class Details extends Component {
     let id = event.target.id,
         QRSeed = JSON.parse(JSON.stringify(DataDefinition[id]));
     QRSeed.d['ads'] = [this.state.user.token_holder_address];
-    QRSeed.d['tid'] = [this.state.user.token_id];
+    QRSeed.d['tid'] = this.state.user.token_id;
     delete QRSeed['_label'];
     this.setState({
       currentListId : id,
@@ -58,6 +58,7 @@ class Details extends Component {
   render() {
     if( this.state.error ) return <Error message={this.state.error.message} />;
     if (!this.state.isLoaded ) return <div className="p-4" ><Loader /></div>;
+    this.state.QRSeed && console.log('QRSeed data:', this.state.QRSeed);
     return (
         <React.Fragment>
           <div className="row">

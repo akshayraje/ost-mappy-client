@@ -4,7 +4,7 @@ const dataMap = [
       dd: "TX",
       ddv: "1.1.0",
       d :{
-        rn : "directTransfers",
+        rn : "direct transfer",
         ads : [],
         ams : ["1"]
       },
