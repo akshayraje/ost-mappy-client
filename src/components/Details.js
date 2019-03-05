@@ -8,7 +8,7 @@ import axios from 'axios';
 /*
  * Internal dependencies
  */
-import DataDefinition from '../constants/DataDefinition'
+import { dataMap, apiRoot } from '../constants'
 import { Loader, Error } from './Loader';
 
 class Details extends Component {
@@ -30,7 +30,7 @@ class Details extends Component {
     this.setState({
       isLoaded : false,
     });
-    axios.get(`https://s5-mappy.stagingost.com/api/users/${this.props.match.params.userId}/ost-users`)
+    axios.get(`${apiRoot}api/users/${this.props.match.params.userId}/ost-users`)
       .then(res => {
         this.setState({
           user : res.data,
@@ -47,7 +47,7 @@ class Details extends Component {
 
   onClick( event ) {
     let id = event.target.id,
-        QRSeed = JSON.parse(JSON.stringify(DataDefinition[id]));
+        QRSeed = JSON.parse(JSON.stringify(dataMap[id]));
     QRSeed.d['ads'] = [this.state.user.token_holder_address];
     QRSeed.d['tid'] = this.state.user.token_id;
     if(this.ams.length > 0){
@@ -77,7 +77,7 @@ class Details extends Component {
           </div>
           <div className="row text-center">
             <div className="text-center w-100">
-              {DataDefinition.map((action, index) => (
+              {dataMap.map((action, index) => (
                   <button key={`k-${index}`} className="btn btn-primary mx-2" id={index} onClick={this.onClick}>{action._label}</button>
               ))}
             </div>

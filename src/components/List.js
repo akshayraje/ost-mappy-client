@@ -8,6 +8,7 @@ import axios from 'axios';
  * Internal dependencies
  */
 import Card from './Card';
+import { apiRoot } from '../constants'
 import { Loader, Error } from './Loader';
 
 /*
@@ -39,7 +40,7 @@ class List extends Component {
     this.setState({
       isLoaded : false,
     });
-    axios.get(`https://s5-mappy.stagingost.com/api/users?limit=${LIMIT}&skip=${skip}`)
+    axios.get(`${apiRoot}api/users?limit=${LIMIT}&skip=${skip}`)
       .then(res => {
         const users = res.data['users'];
         this.setState({

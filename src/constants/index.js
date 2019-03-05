@@ -31,4 +31,6 @@ const dataMap = [
     }
 ];
 
-export default dataMap;
+const apiRoot = "https://s5-mappy.stagingost.com/";
+
+export { dataMap, apiRoot};
