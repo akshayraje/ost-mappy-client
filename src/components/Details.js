@@ -22,6 +22,8 @@ class Details extends Component {
       error : null,
       isLoaded : false
     };
+    const params = (new URL(document.location)).searchParams;
+    this.ams = params.getAll("ams");
   }
 
   componentDidMount(){
@@ -48,6 +50,9 @@ class Details extends Component {
         QRSeed = JSON.parse(JSON.stringify(DataDefinition[id]));
     QRSeed.d['ads'] = [this.state.user.token_holder_address];
     QRSeed.d['tid'] = this.state.user.token_id;
+    if(this.ams.length > 0){
+      QRSeed.d['ams'] = this.ams;
+    }
     delete QRSeed['_label'];
     this.setState({
       currentListId : id,
