@@ -19,7 +19,7 @@ const dataMap = [
     dd: "TX",
     ddv: "1.1.0",
     d: {
-      rn: "pay",
+      rn: "pricer",
       ads: [],
       ams: ["1"]
     },
