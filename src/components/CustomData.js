@@ -139,8 +139,9 @@ class CustomData extends Component {
         <div className="row bg-light py-3 my-4">
           <div className="col-12 col-md-4">
             <div className="form-group">
-              <label htmlFor="exampleFormControlSelect1">Select User</label>
-              <select className="form-control" id="exampleFormControlSelect1" value={this.state.currentUserId} onChange={this.handleUserChange}>
+              <label htmlFor="userSelect">Select User</label>
+              <select className="form-control"
+                      id="userSelect" value={this.state.currentUserId} onChange={this.handleUserChange}>
                 <option />
                 {this.state.filteredUsers.map(user => (
                   <option value={user._id} key={user._id}>
