@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import CustomDataItem from "./CustomDataItem";
-import axios from "axios/index";
-import { apiRoot, dataMap } from "../constants";
-import QRCode from "qrcode.react";
+import React, { Component } from 'react';
+import CustomDataItem from './CustomDataItem';
+import axios from 'axios/index';
+import { apiRoot, dataMap } from '../constants';
+import QRCode from 'qrcode.react';
 
 class CustomData extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class CustomData extends Component {
       amounts: [],
       addresses: [],
       currentTokenId: null,
-      currentUserId: "",
+      currentUserId: '',
       QRSeed: null,
       actionId: 0,
       actionLabel: dataMap[0]._label
@@ -30,14 +30,14 @@ class CustomData extends Component {
       this.state.amounts.length === 0 ||
       !this.state.currentTokenId
     ) {
-      return "";
+      return '';
     }
     let id = this.state.actionId,
       QRSeed = JSON.parse(JSON.stringify(dataMap[id]));
-    QRSeed.d["ads"] = this.state.addresses;
-    QRSeed.d["tid"] = this.state.currentTokenId;
-    QRSeed.d["ams"] = this.state.amounts;
-    delete QRSeed["_label"];
+    QRSeed.d['ads'] = this.state.addresses;
+    QRSeed.d['tid'] = this.state.currentTokenId;
+    QRSeed.d['ams'] = this.state.amounts;
+    delete QRSeed['_label'];
     return QRSeed;
   }
 
@@ -61,8 +61,8 @@ class CustomData extends Component {
     let filteredUsers = [];
     axios
       .get(`${apiRoot}api/users`)
-      .then(res => {
-        const users = res.data["users"];
+      .then((res) => {
+        const users = res.data['users'];
         if (users.length === 0) return;
         users.forEach(function(user, userIndex) {
           if (user.token_holder_address) {
@@ -73,7 +73,7 @@ class CustomData extends Component {
           filteredUsers
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.error(err);
       });
   }
@@ -86,14 +86,14 @@ class CustomData extends Component {
     let userId = event.target.value;
     axios
       .get(`${apiRoot}api/users/${userId}/ost-users`)
-      .then(res => {
+      .then((res) => {
         this.setState({
           currentTokenId: res.data && res.data.token_id,
           currentUserId: userId,
           QRSeed: this.getQRCodeData()
         });
       })
-      .catch(err => {});
+      .catch((err) => {});
   }
 
   handleAddressChange(address, index) {
@@ -112,7 +112,7 @@ class CustomData extends Component {
     amounts[index] = amount;
     this.setState({
       amounts,
-      QRSeed: this.getQRCodeData(),
+      QRSeed: this.getQRCodeData()
     });
   }
 
@@ -140,10 +140,14 @@ class CustomData extends Component {
           <div className="col-12 col-md-4">
             <div className="form-group">
               <label htmlFor="userSelect">Select User</label>
-              <select className="form-control"
-                      id="userSelect" value={this.state.currentUserId} onChange={this.handleUserChange}>
+              <select
+                className="form-control"
+                id="userSelect"
+                value={this.state.currentUserId}
+                onChange={this.handleUserChange}
+              >
                 <option />
-                {this.state.filteredUsers.map(user => (
+                {this.state.filteredUsers.map((user) => (
                   <option value={user._id} key={user._id}>
                     {user.user_display_name}
                   </option>
@@ -174,7 +178,7 @@ class CustomData extends Component {
                 <div className="col-12 text-center">
                   <h3>{this.state.actionLabel}</h3>
                 </div>
-                <div className="col-12 text-center w-100 mt-3" style={{ height: "350px" }}>
+                <div className="col-12 text-center w-100 mt-3" style={{ height: '350px' }}>
                   {this.state.QRSeed ? (
                     <QRCode className="p-4" size={350} value={JSON.stringify(this.state.QRSeed)} />
                   ) : (
