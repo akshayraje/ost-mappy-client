@@ -118,7 +118,7 @@ class CustomData extends Component {
 
   ListItemCollection() {
     const items = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 5; i++) {
       items.push(
         <CustomDataItem
           filteredUsers={this.state.filteredUsers}
@@ -140,12 +140,7 @@ class CustomData extends Component {
           <div className="col-12 col-md-4">
             <div className="form-group">
               <label htmlFor="exampleFormControlSelect1">Select User</label>
-              <select
-                className="form-control"
-                id="exampleFormControlSelect1"
-                value={this.state.currentUserId}
-                onChange={this.handleUserChange}
-              >
+              <select className="form-control" id="exampleFormControlSelect1" value={this.state.currentUserId} onChange={this.handleUserChange}>
                 <option />
                 {this.state.filteredUsers.map(user => (
                   <option value={user._id} key={user._id}>
