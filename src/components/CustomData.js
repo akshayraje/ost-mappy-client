@@ -112,7 +112,7 @@ class CustomData extends Component {
     amounts[index] = amount;
     this.setState({
       amounts,
-      QRSeed: this.getQRCodeData()
+      QRSeed: this.getQRCodeData(),
     });
   }
 
