@@ -33,6 +33,7 @@ class Devices extends Component {
       .then((res) => {
         this.setState({
           addresses: res.data,
+          currentAddress: res.data[0].address,
           isLoaded: true
         });
       })
