@@ -4,6 +4,9 @@ import axios from 'axios/index';
 import { apiRoot, dataMap } from '../constants';
 import QRCode from 'qrcode.react';
 
+const MAX_COUNT = 10,
+  COUNT = 5;
+
 class CustomData extends Component {
   constructor(props) {
     super(props);
@@ -15,13 +18,15 @@ class CustomData extends Component {
       currentUserId: '',
       QRSeed: null,
       actionId: 0,
-      actionLabel: dataMap[0]._label
+      actionLabel: dataMap[0]._label,
+      count: COUNT
     };
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
     this.handleAmountChange = this.handleAmountChange.bind(this);
     this.getQRCodeData = this.getQRCodeData.bind(this);
     this.setAction = this.setAction.bind(this);
+    this.addItem = this.addItem.bind(this);
   }
 
   getQRCodeData() {
@@ -118,7 +123,7 @@ class CustomData extends Component {
 
   ListItemCollection() {
     const items = [];
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < this.state.count; i++) {
       items.push(
         <CustomDataItem
           filteredUsers={this.state.filteredUsers}
@@ -130,6 +135,12 @@ class CustomData extends Component {
       );
     }
     return items;
+  }
+
+  addItem() {
+    this.setState({
+      count: this.state.count + 1
+    });
   }
 
   render() {
@@ -171,25 +182,30 @@ class CustomData extends Component {
               </div>
             </div>
             {this.ListItemCollection()}
+            {this.state.count < MAX_COUNT ? (
+              <button className="btn btn-light float-right" onClick={this.addItem}>
+                [+]
+              </button>
+            ) : (
+              ''
+            )}
           </div>
           <div className="col-6">
-            <React.Fragment>
-              <div className="row">
-                <div className="col-12 text-center">
-                  <h3>{this.state.actionLabel}</h3>
-                </div>
-                <div className="col-12 text-center w-100 mt-3" style={{ height: '350px' }}>
-                  {this.state.QRSeed ? (
-                    <QRCode className="p-4" size={350} value={JSON.stringify(this.state.QRSeed)} />
-                  ) : (
-                    <span className="text-muted">Incomplete / incorrect address / amount combination</span>
-                  )}
-                </div>
+            <div className="row">
+              <div className="col-12 text-center">
+                <h3>{this.state.actionLabel}</h3>
               </div>
-            </React.Fragment>
+              <div className="col-12 text-center w-100 mt-3" style={{ height: '350px' }}>
+                {this.state.QRSeed ? (
+                  <QRCode className="p-4" size={350} value={JSON.stringify(this.state.QRSeed)} />
+                ) : (
+                  <span className="text-muted">Incomplete / incorrect address / amount combination</span>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-        <div className="row text-center">
+        <div className="row text-center my-3">
           <div className="text-center w-100">
             {dataMap.map((action, index) => (
               <button
