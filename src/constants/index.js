@@ -1,36 +1,55 @@
 const dataMap = [
   {
-    _label: "Direct Transfers",
-    dd: "TX",
-    ddv: "1.1.0",
+    _label: 'Direct Transfers',
+    dd: 'TX',
+    ddv: '1.1.0',
     d: {
-      rn: "direct transfer",
+      rn: 'direct transfer',
       ads: [],
-      ams: ["1"]
+      ams: ['1']
     },
     m: {
-      tn: "like",
-      tt: "user_to_user",
-      td: "Thanks for like"
+      tn: 'like',
+      tt: 'user_to_user',
+      td: 'Thanks for like'
     }
   },
   {
-    _label: "Pay",
-    dd: "TX",
-    ddv: "1.1.0",
+    _label: 'Pay',
+    dd: 'TX',
+    ddv: '1.1.0',
     d: {
-      rn: "pricer",
+      rn: 'pricer',
       ads: [],
-      ams: ["1"]
+      ams: ['1']
     },
     m: {
-      tn: "comment",
-      tt: "company_to_user",
-      td: "Thanks for comment"
+      tn: 'comment',
+      tt: 'company_to_user',
+      td: 'Thanks for comment'
     }
   }
 ];
 
-const apiRoot = "https://s5-mappy.stagingost.com/";
+const deviceMap = [
+  {
+    _label: 'Authorize Device',
+    dd: 'AD',
+    ddv: '1.1.0',
+    d: {
+      da: ''
+    }
+  },
+  {
+    _label: 'Revoke Device',
+    dd: 'RD',
+    ddv: '1.1.0',
+    d: {
+      da: ''
+    }
+  }
+];
 
-export { dataMap, apiRoot };
+const apiRoot = 'https://s5-mappy.stagingost.com/';
+
+export { dataMap, deviceMap, apiRoot };

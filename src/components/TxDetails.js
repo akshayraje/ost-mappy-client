@@ -1,17 +1,17 @@
 /*
  * External dependencies
  */
-import React, { Component } from "react";
-import QRCode from "qrcode.react";
-import axios from "axios";
+import React, { Component } from 'react';
+import QRCode from 'qrcode.react';
+import axios from 'axios';
 
 /*
  * Internal dependencies
  */
-import { dataMap, apiRoot } from "../constants";
-import { Loader, Error } from "./Loader";
+import { dataMap, apiRoot } from '../constants';
+import { Loader, Error } from './Loader';
 
-class Details extends Component {
+class TxDetails extends Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
@@ -22,7 +22,7 @@ class Details extends Component {
       isLoaded: false
     };
     const params = new URL(document.location).searchParams;
-    this.ams = params.getAll("ams");
+    this.ams = params.getAll('ams');
   }
 
   componentDidMount() {
@@ -31,13 +31,13 @@ class Details extends Component {
     });
     axios
       .get(`${apiRoot}api/users/${this.props.match.params.userId}/ost-users`)
-      .then(res => {
+      .then((res) => {
         this.setState({
           user: res.data,
           isLoaded: true
         });
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({
           error: err,
           isLoaded: true
@@ -48,12 +48,12 @@ class Details extends Component {
   onClick(event) {
     let id = event.target.id,
       QRSeed = JSON.parse(JSON.stringify(dataMap[id]));
-    QRSeed.d["ads"] = [this.state.user.token_holder_address];
-    QRSeed.d["tid"] = this.state.user.token_id;
+    QRSeed.d['ads'] = [this.state.user.token_holder_address];
+    QRSeed.d['tid'] = this.state.user.token_id;
     if (this.ams.length > 0) {
-      QRSeed.d["ams"] = this.ams;
+      QRSeed.d['ams'] = this.ams;
     }
-    delete QRSeed["_label"];
+    delete QRSeed['_label'];
     this.setState({
       currentListId: id,
       QRSeed
@@ -68,15 +68,15 @@ class Details extends Component {
           <Loader />
         </div>
       );
-    this.state.QRSeed && console.log("QRSeed data:", this.state.QRSeed);
+    this.state.QRSeed && console.log('QRSeed data:', this.state.QRSeed);
     return (
       <React.Fragment>
         <div className="row">
-          <div className="text-center w-100" style={{ height: "350px" }}>
+          <div className="text-center w-100" style={{ height: '350px' }}>
             {this.state.QRSeed ? (
               <QRCode className="p-4" size={350} value={JSON.stringify(this.state.QRSeed)} />
             ) : (
-              <p className="p-4 display-4 text-muted" style={{ height: "350px" }}>
+              <p className="p-4 display-4 text-muted" style={{ height: '350px' }}>
                 Select an action to get QR code
               </p>
             )}
@@ -96,4 +96,4 @@ class Details extends Component {
   }
 }
 
-export default Details;
+export default TxDetails;

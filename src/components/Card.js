@@ -23,18 +23,14 @@ class Card extends Component {
             </h5>
             <p className="card-text">Phone: {this.props.user.mobile_number}</p>
             {this.props.user.token_holder_address ? (
-              <div className="row">
-                <div className="col-6">
-                  <Link className="card-link" to={`/user/${this.props.user._id}/tx`}>
-                    Transaction QR Codes
-                  </Link>
-                </div>
-                <div className="col-6">
-                  <Link className="card-link" to={`/user/${this.props.user._id}/devices`}>
-                    Devices QR Codes
-                  </Link>
-                </div>
-              </div>
+              <React.Fragment>
+                <Link className="btn btn-light mr-2" to={`/user/${this.props.user._id}/ost-users`}>
+                  Tx QR
+                </Link>
+                <Link className="btn btn-light" to={`/user/${this.props.user._id}/devices`}>
+                  Devices QR
+                </Link>
+              </React.Fragment>
             ) : (
               <span className="text-black-50">User not setup</span>
             )}
