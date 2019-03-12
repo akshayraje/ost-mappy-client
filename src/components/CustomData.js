@@ -3,6 +3,7 @@ import CustomDataItem from './CustomDataItem';
 import axios from 'axios/index';
 import { apiRoot, dataMap } from '../constants';
 import QRCode from 'qrcode.react';
+import { Loader, Error } from './Loader';
 
 const MAX_COUNT = 10,
   COUNT = 5;
@@ -19,7 +20,9 @@ class CustomData extends Component {
       QRSeed: null,
       actionId: 0,
       actionLabel: dataMap[0]._label,
-      count: COUNT
+      count: COUNT,
+      isLoaded: false,
+      error: null
     };
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
@@ -63,6 +66,7 @@ class CustomData extends Component {
   }
 
   getData() {
+    this.setState({ isLoaded: false });
     let filteredUsers = [];
     axios
       .get(`${apiRoot}api/users`)
@@ -75,11 +79,16 @@ class CustomData extends Component {
           }
         });
         this.setState({
-          filteredUsers
+          filteredUsers,
+          isLoaded: true
         });
       })
       .catch((err) => {
         console.error(err);
+        this.setState({
+          isLoaded: true,
+          error: err
+        });
       });
   }
 
@@ -145,6 +154,14 @@ class CustomData extends Component {
 
   render() {
     this.state.filteredUsers.length > 0 && console.log(this.state);
+    if (this.state.error) return <Error message={this.state.error.message} />;
+    if (!this.state.isLoaded)
+      return (
+        <div className="p-5">
+          <Loader />
+        </div>
+      );
+
     return (
       <div>
         <div className="row bg-light py-3 my-4">

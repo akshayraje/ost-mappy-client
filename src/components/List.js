@@ -81,10 +81,14 @@ class List extends Component {
 
   render() {
     if (this.state.error) return <Error message={this.state.error.message} />;
-
+    if (!this.state.isLoaded)
+      return (
+        <div className="p-5">
+          <Loader />
+        </div>
+      );
     return (
       <div className="p-4">
-        {!this.state.isLoaded ? <Loader /> : ''}
         <div className="row">
           {this.state.users.map((user) => (
             <Card key={user._id} user={user} />
