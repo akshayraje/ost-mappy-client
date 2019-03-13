@@ -112,13 +112,11 @@ class CustomData extends Component {
 
   handleAddressChange(address, index) {
     let addresses = this.state.addresses;
-    if (addresses.indexOf(address) === -1) {
-      addresses[index] = address;
-      this.setState({
-        addresses,
-        QRSeed: this.getQRCodeData()
-      });
-    }
+    addresses[index] = address;
+    this.setState({
+      addresses,
+      QRSeed: this.getQRCodeData()
+    });
   }
 
   handleAmountChange(amount, index) {
@@ -177,7 +175,7 @@ class CustomData extends Component {
                 <option />
                 {this.state.filteredUsers.map((user) => (
                   <option value={user._id} key={user._id}>
-                    {user.user_display_name}
+                    {user.username}
                   </option>
                 ))}
               </select>
