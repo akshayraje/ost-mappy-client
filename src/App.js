@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 import List from './components/List';
 import Header from './components/Header';
 import TxDetails from './components/TxDetails';
@@ -7,7 +7,7 @@ import CustomData from './components/CustomData';
 import Devices from './components/Devices';
 
 const App = () => (
-  <Router>
+  <HashRouter basename={window.location.pathname}>
     <React.Fragment>
       <Header />
       <div className="container">
@@ -21,7 +21,7 @@ const App = () => (
         </div>
       </div>
     </React.Fragment>
-  </Router>
+  </HashRouter>
 );
 
 export default App;

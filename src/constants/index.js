@@ -52,6 +52,6 @@ const deviceMap = [
 
 const env = new URL(document.location).searchParams.get('env');
 
-const apiRoot = env ? `https://${env}-mappy.stagingost.com/` : 'https://s7-mappy.stagingost.com/';
+const apiRoot = env ? `https://${env}-mappy.stagingost.com/` : 'https://s5-mappy.stagingost.com/';
 
 export { dataMap, deviceMap, apiRoot };
