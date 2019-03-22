@@ -14,7 +14,6 @@ import { Loader, Error } from './Loader';
 class TxDetails extends Component {
   constructor(props) {
     super(props);
-    this.onClick = this.onClick.bind(this);
     this.state = {
       currentListId: null,
       user: null,
@@ -45,7 +44,7 @@ class TxDetails extends Component {
       });
   }
 
-  onClick(event) {
+  onActionChange = (event) => {
     let id = event.target.id,
       QRSeed = JSON.parse(JSON.stringify(dataMap[id]));
     QRSeed.d['ads'] = [this.state.user.token_holder_address];
@@ -58,7 +57,7 @@ class TxDetails extends Component {
       currentListId: id,
       QRSeed
     });
-  }
+  };
 
   render() {
     if (this.state.error) return <Error message={this.state.error.message} />;
@@ -85,7 +84,7 @@ class TxDetails extends Component {
         <div className="row text-center">
           <div className="text-center w-100">
             {dataMap.map((action, index) => (
-              <button key={`k-${index}`} className="btn btn-primary mx-2" id={index} onClick={this.onClick}>
+              <button key={`k-${index}`} className="btn btn-primary mx-2" id={index} onClick={this.onActionChange}>
                 {action._label}
               </button>
             ))}

@@ -24,15 +24,9 @@ class CustomData extends Component {
       isLoaded: false,
       error: null
     };
-    this.handleUserChange = this.handleUserChange.bind(this);
-    this.handleAddressChange = this.handleAddressChange.bind(this);
-    this.handleAmountChange = this.handleAmountChange.bind(this);
-    this.getQRCodeData = this.getQRCodeData.bind(this);
-    this.setAction = this.setAction.bind(this);
-    this.addItem = this.addItem.bind(this);
   }
 
-  getQRCodeData() {
+  getQRCodeData = () => {
     if (
       this.state.addresses.length !== this.state.amounts.length ||
       this.state.amounts.length === 0 ||
@@ -47,9 +41,9 @@ class CustomData extends Component {
     QRSeed.d['ams'] = this.state.amounts;
     delete QRSeed['_label'];
     return QRSeed;
-  }
+  };
 
-  setAction(event) {
+  setAction = (event) => {
     let id = event.target.id,
       actionLabel = event.target.dataset.label;
     this.setState(
@@ -63,21 +57,22 @@ class CustomData extends Component {
         });
       }
     );
-  }
+  };
 
-  getData() {
+  getData = () => {
     this.setState({ isLoaded: false });
     let filteredUsers = [];
     axios
       .get(`${apiRoot}api/users`)
       .then((res) => {
         const users = res.data['users'];
-        if (users.length === 0) return;
-        users.forEach(function(user, userIndex) {
-          if (user.token_holder_address) {
-            filteredUsers.push(user);
-          }
-        });
+        if (users.length > 0) {
+          users.forEach(function(user, userIndex) {
+            if (user.token_holder_address) {
+              filteredUsers.push(user);
+            }
+          });
+        }
         this.setState({
           filteredUsers,
           isLoaded: true
@@ -90,13 +85,13 @@ class CustomData extends Component {
           error: err
         });
       });
-  }
+  };
 
-  componentDidMount() {
+  componentDidMount = () => {
     this.getData();
-  }
+  };
 
-  handleUserChange(event) {
+  handleUserChange = (event) => {
     let userId = event.target.value;
     axios
       .get(`${apiRoot}api/users/${userId}/ost-users`)
@@ -108,27 +103,27 @@ class CustomData extends Component {
         });
       })
       .catch((err) => {});
-  }
+  };
 
-  handleAddressChange(address, index) {
+  handleAddressChange = (address, index) => {
     let addresses = this.state.addresses;
     addresses[index] = address;
     this.setState({
       addresses,
       QRSeed: this.getQRCodeData()
     });
-  }
+  };
 
-  handleAmountChange(amount, index) {
+  handleAmountChange = (amount, index) => {
     let amounts = this.state.amounts;
     amounts[index] = amount;
     this.setState({
       amounts,
       QRSeed: this.getQRCodeData()
     });
-  }
+  };
 
-  ListItemCollection() {
+  ListItemCollection = () => {
     const items = [];
     for (var i = 0; i < this.state.count; i++) {
       items.push(
@@ -142,13 +137,13 @@ class CustomData extends Component {
       );
     }
     return items;
-  }
+  };
 
-  addItem() {
+  addItem = () => {
     this.setState({
       count: this.state.count + 1
     });
-  }
+  };
 
   render() {
     this.state.filteredUsers.length > 0 && console.log(this.state);
@@ -159,6 +154,7 @@ class CustomData extends Component {
           <Loader />
         </div>
       );
+    if (this.state.isLoaded && this.state.filteredUsers.length === 0) return <Error message="No users found" />;
 
     return (
       <div>

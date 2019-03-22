@@ -1,32 +1,29 @@
-import React from "react";
+import React from 'react';
 
 export default class CustomDataItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: "",
-      amount: ""
+      address: '',
+      amount: ''
     };
-
-    this.onAddressChange = this.onAddressChange.bind(this);
-    this.onAmountChange = this.onAmountChange.bind(this);
   }
 
-  onAddressChange(event) {
+  onAddressChange = (event) => {
     let address = event.target.value;
     this.props.handleAddressChange(address, this.props.id);
     this.setState({
       address
     });
-  }
+  };
 
-  onAmountChange(event) {
+  onAmountChange = (event) => {
     let amount = event.target.value;
     this.props.handleAmountChange(amount, this.props.id);
     this.setState({
       amount
     });
-  }
+  };
 
   render() {
     return (
@@ -39,7 +36,7 @@ export default class CustomDataItem extends React.Component {
             onChange={this.onAddressChange}
           >
             <option />
-            {this.props.filteredUsers.map(user => (
+            {this.props.filteredUsers.map((user) => (
               <option key={user._id} value={user.token_holder_address}>
                 {user.user_display_name} ({user.token_holder_address})
               </option>

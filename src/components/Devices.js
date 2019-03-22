@@ -14,8 +14,6 @@ import { Loader, Error } from './Loader';
 class Devices extends Component {
   constructor(props) {
     super(props);
-    this.handleActionChange = this.handleActionChange.bind(this);
-    this.handleDeviceChange = this.handleDeviceChange.bind(this);
     this.state = {
       currentAddress: '',
       addresses: null,
@@ -45,7 +43,7 @@ class Devices extends Component {
       });
   }
 
-  handleActionChange(event) {
+  handleActionChange = (event) => {
     let id = event.target.id,
       QRSeed = JSON.parse(JSON.stringify(deviceMap[id]));
     QRSeed.d['da'] = this.state.currentAddress;
@@ -53,13 +51,13 @@ class Devices extends Component {
     this.setState({
       QRSeed
     });
-  }
+  };
 
-  handleDeviceChange(event) {
+  handleDeviceChange = (event) => {
     this.setState({
       currentAddress: event.target.value
     });
-  }
+  };
 
   render() {
     if (this.state.error) return <Error message={this.state.error.message} />;

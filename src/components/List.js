@@ -27,8 +27,6 @@ class List extends Component {
       hasPrevious: false
     };
     this.skip = 0;
-    this.next = this.next.bind(this);
-    this.previous = this.previous.bind(this);
   }
 
   componentDidMount() {
@@ -67,17 +65,17 @@ class List extends Component {
       });
   }
 
-  next() {
+  next = () => {
     if (this.state.hasNext) {
       this.getData(this.skip + LIMIT);
     }
-  }
+  };
 
-  previous() {
+  previous = () => {
     if (this.state.hasPrevious) {
       this.getData(this.skip - LIMIT);
     }
-  }
+  };
 
   render() {
     if (this.state.error) return <Error message={this.state.error.message} />;
@@ -87,6 +85,7 @@ class List extends Component {
           <Loader />
         </div>
       );
+    if (this.state.isLoaded && this.state.users.length === 0) return <Error message="No users found" />;
     return (
       <div className="p-4">
         <div className="row">
