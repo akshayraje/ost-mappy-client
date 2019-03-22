@@ -50,8 +50,6 @@ const deviceMap = [
   }
 ];
 
-const env = new URL(document.location).searchParams.get('env');
-
-const apiRoot = env ? `https://${env}-mappy.stagingost.com/` : 'https://s5-mappy.stagingost.com/';
+const apiRoot = process.env.REACT_APP_API_ROOT;
 
 export { dataMap, deviceMap, apiRoot };

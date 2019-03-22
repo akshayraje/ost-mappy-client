@@ -31,6 +31,9 @@ const Header = () => (
           </Link>
         </li>
       </ul>
+      <div className="my-2">
+        <span className="badge badge-primary font-weight-light text-monospace">{process.env.REACT_APP_API_ROOT}</span>
+      </div>
     </div>
   </nav>
 );
