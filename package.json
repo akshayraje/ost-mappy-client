@@ -14,7 +14,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "firebase deploy",
+    "deploy": "aws s3 sync build/ s3://mappy-client.ost.com --acl public-read",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
