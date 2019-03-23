@@ -4,6 +4,7 @@ import axios from 'axios/index';
 import { apiRoot, dataMap } from '../constants';
 import QRCode from 'qrcode.react';
 import { Loader, Error } from './Loader';
+import CustomInputDataItem from './CustomInputDataItem';
 
 const MAX_COUNT = 10,
   COUNT = 5;
@@ -194,12 +195,19 @@ class CustomData extends Component {
             </div>
             {this.ListItemCollection()}
             {this.state.count < MAX_COUNT ? (
-              <button className="btn btn-light float-right" onClick={this.addItem}>
+              <button className="btn btn-light mb-2 float-right" onClick={this.addItem}>
                 [+]
               </button>
             ) : (
               ''
             )}
+            <CustomInputDataItem
+              filteredUsers={this.state.filteredUsers}
+              key={MAX_COUNT}
+              id={MAX_COUNT}
+              handleAddressChange={this.handleAddressChange}
+              handleAmountChange={this.handleAmountChange}
+            />
           </div>
           <div className="col-6">
             <div className="row">
