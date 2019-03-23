@@ -28,7 +28,7 @@ export default class CustomInputDataItem extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div style={{ clear: 'right' }}>Custom Input</div>
+        <div style={{ clear: 'right' }}>Custom Address</div>
         <div className="row">
           <div className="col-12 col-md-9">
             <input

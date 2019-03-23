@@ -45,9 +45,8 @@ class CustomData extends Component {
     return QRSeed;
   };
 
-  //This method is used to remove any null values in the array
   sanitizeArray = (array) => {
-    return array.filter(function(el) {
+    return array.filter((el) => {
       return el !== null;
     });
   };
@@ -155,7 +154,6 @@ class CustomData extends Component {
   };
 
   render() {
-    this.state.filteredUsers.length > 0 && console.log(this.state);
     if (this.state.error) return <Error message={this.state.error.message} />;
     if (!this.state.isLoaded)
       return (
@@ -195,7 +193,7 @@ class CustomData extends Component {
           <div className="col-6">
             <div className="row">
               <div className="col-12 col-md-9">
-                <label>Address</label>
+                <label>Select Address</label>
               </div>
               <div className="col-12 col-md-3">
                 <label>Amount</label>
@@ -222,6 +220,7 @@ class CustomData extends Component {
                 <h3>{this.state.actionLabel}</h3>
               </div>
               <div className="col-12 text-center w-100 mt-3" style={{ height: '350px' }}>
+                {this.state.QRSeed && console.log('QRSeed:', this.state.QRSeed)}
                 {this.state.QRSeed ? (
                   <QRCode className="p-4" size={350} value={JSON.stringify(this.state.QRSeed)} />
                 ) : (
