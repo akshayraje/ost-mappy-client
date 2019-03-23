@@ -202,7 +202,6 @@ class CustomData extends Component {
               ''
             )}
             <CustomInputDataItem
-              filteredUsers={this.state.filteredUsers}
               key={MAX_COUNT}
               id={MAX_COUNT}
               handleAddressChange={this.handleAddressChange}
