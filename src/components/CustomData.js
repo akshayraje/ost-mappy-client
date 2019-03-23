@@ -37,11 +37,19 @@ class CustomData extends Component {
     }
     let id = this.state.actionId,
       QRSeed = JSON.parse(JSON.stringify(dataMap[id]));
-    QRSeed.d['ads'] = this.state.addresses;
+
+    QRSeed.d['ads'] = this.sanitizeArray(this.state.addresses);
     QRSeed.d['tid'] = this.state.currentTokenId;
-    QRSeed.d['ams'] = this.state.amounts;
+    QRSeed.d['ams'] = this.sanitizeArray(this.state.amounts);
     delete QRSeed['_label'];
     return QRSeed;
+  };
+
+  //This method is used to remove any null values in the array
+  sanitizeArray = (array) => {
+    return array.filter(function(el) {
+      return el !== null;
+    });
   };
 
   setAction = (event) => {
