@@ -91,7 +91,7 @@ class Devices extends Component {
             >
               {this.state.addresses.map((device) => (
                 <option value={device.address} key={device.device_uuid}>
-                  {device.device_name}
+                  {device.address}
                 </option>
               ))}
             </select>
