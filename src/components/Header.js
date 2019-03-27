@@ -30,6 +30,11 @@ const Header = () => (
             Custom
           </Link>
         </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/calculator">
+            Calculator
+          </Link>
+        </li>
       </ul>
       <div className="my-2">
         <span className="badge badge-primary font-weight-light text-monospace">{process.env.REACT_APP_API_ROOT}</span>
