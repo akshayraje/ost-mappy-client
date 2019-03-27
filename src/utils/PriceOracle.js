@@ -13,10 +13,10 @@ class PriceOracle {
 
   constructor(config) {
     if (config.ost_to_fiat) {
-      this.#OST_TO_FIAT = String(config.ost_to_fiat);
+      this.OST_TO_FIAT = String(config.ost_to_fiat);
     }
     if (config.ost_to_bt) {
-      this.#OST_TO_BT = String(config.ost_to_bt);
+      this.OST_TO_BT = String(config.ost_to_bt);
     }
   }
 
@@ -25,7 +25,7 @@ class PriceOracle {
 
     ost = BigNumber(ost);
 
-    let result = ost.multipliedBy(this.#OST_TO_FIAT);
+    let result = ost.multipliedBy(this.OST_TO_FIAT);
 
     return this.toFiat(result);
   }
@@ -34,8 +34,8 @@ class PriceOracle {
     if (!bt) return '';
 
     bt = BigNumber(bt);
-    let fiatBN = BigNumber(this.#OST_TO_FIAT),
-      oneBTToFiat = fiatBN.dividedBy(this.#OST_TO_BT),
+    let fiatBN = BigNumber(this.OST_TO_FIAT),
+      oneBTToFiat = fiatBN.dividedBy(this.OST_TO_BT),
       result = oneBTToFiat.multipliedBy(bt);
 
     return this.toFiat(result);
@@ -54,7 +54,7 @@ class PriceOracle {
 
     ost = BigNumber(ost);
 
-    let result = ost.multipliedBy(this.#OST_TO_BT);
+    let result = ost.multipliedBy(this.OST_TO_BT);
 
     return this.toBT(result);
   }
@@ -72,7 +72,7 @@ class PriceOracle {
 
     bt = BigNumber(bt);
 
-    let result = bt.dividedBy(this.#OST_TO_BT);
+    let result = bt.dividedBy(this.OST_TO_BT);
 
     return this.toOst(result);
   }
@@ -99,7 +99,7 @@ class PriceOracle {
       return '';
     }
     bt = BigNumber(bt);
-    return bt.toFixed(this.#P_BT, this.#P_BT_ROUND_ROUNDING_MODE);
+    return bt.toFixed(this.P_BT, this.P_BT_ROUND_ROUNDING_MODE);
   }
 
   toOst(ost) {
@@ -117,7 +117,7 @@ class PriceOracle {
       return '';
     }
     ost = BigNumber(ost);
-    return ost.toFixed(this.#P_OST, this.#P_OST_ROUND_ROUNDING_MODE);
+    return ost.toFixed(this.P_OST, this.P_OST_ROUND_ROUNDING_MODE);
   }
 
   toFiat(fiat) {
@@ -138,7 +138,7 @@ class PriceOracle {
 
     fiat = BigNumber(fiat);
     var precession = this.getFiatPrecession();
-    return fiat.toFixed(precession, this.#P_FIAT_ROUND_ROUNDING_MODE);
+    return fiat.toFixed(precession, this.P_FIAT_ROUND_ROUNDING_MODE);
   }
 
   fromWei(val) {
@@ -162,16 +162,16 @@ class PriceOracle {
   }
 
   getOstPrecession() {
-    return this.#P_OST;
+    return this.P_OST;
   }
 
   //Keeping FIAT precession as configurable as it can be asked for
   getFiatPrecession() {
-    return this.#P_FIAT || this.#P_FIAT;
+    return this.P_FIAT || this.P_FIAT;
   }
 
   getBtPrecession() {
-    return this.#P_BT;
+    return this.P_BT;
   }
 
   //Private method START
