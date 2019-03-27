@@ -8,6 +8,7 @@ export default class OST_BT_USD_calculator extends Component {
     super(props);
     this.ost_to_fiat_conversion_ratio = 0;
     this.ost_to_bt_conversion_ratio = 0;
+    this.priceOracle = null;
     this.state = {
       BT_val: '',
       OST_val: '',
@@ -21,7 +22,7 @@ export default class OST_BT_USD_calculator extends Component {
       .then((res) => {
         this.ost_to_fiat_conversion_ratio = res.data && res.data['price_points']['price_point']['OST']['USD'];
         this.ost_to_bt_conversion_ratio = res.data && res.data['token']['conversion_factor'];
-        PriceOracle.init({
+        this.priceOracle = new PriceOracle({
           ost_to_fiat: this.ost_to_fiat_conversion_ratio,
           ost_to_bt: this.ost_to_bt_conversion_ratio
         });
@@ -32,9 +33,9 @@ export default class OST_BT_USD_calculator extends Component {
   handleOSTChange = (event) => {
     let value = event.target.value;
     this.setState({
-      BT_val: PriceOracle.ostToBt(value),
+      BT_val: this.priceOracle.ostToBt(value),
       OST_val: value,
-      FIAT_val: PriceOracle.ostToFiat(value)
+      FIAT_val: this.priceOracle.ostToFiat(value)
     });
   };
 
@@ -42,8 +43,8 @@ export default class OST_BT_USD_calculator extends Component {
     let value = event.target.value;
     this.setState({
       BT_val: value,
-      OST_val: PriceOracle.btToOst(value),
-      FIAT_val: PriceOracle.btToFiat(value)
+      OST_val: this.priceOracle.btToOst(value),
+      FIAT_val: this.priceOracle.btToFiat(value)
     });
   };
 
