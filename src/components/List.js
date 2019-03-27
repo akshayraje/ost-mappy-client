@@ -3,7 +3,6 @@
  */
 import React, { Component } from 'react';
 import axios from 'axios';
-import _ from 'lodash';
 
 /*
  * Internal dependencies
@@ -11,6 +10,7 @@ import _ from 'lodash';
 import Card from './Card';
 import { apiRoot } from '../constants';
 import { Loader, Error } from './Loader';
+import SearchBox from './SearchBox';
 
 /*
  * Module constants
@@ -29,7 +29,6 @@ class List extends Component {
       searchText: ''
     };
     this.skip = 0;
-    this.debounceGetData = _.debounce(this.getData, 1000);
   }
 
   componentDidMount() {
@@ -82,11 +81,12 @@ class List extends Component {
 
   updateSearchCriteria = (event) => {
     let value = event.target.value;
-    event.persist();
     this.setState({
       searchText: value
     });
-    this.debounceGetData(0, value);
+    if (event.key === 'Enter') {
+      this.getData(0, value);
+    }
   };
 
   render() {
@@ -94,16 +94,7 @@ class List extends Component {
     if (!this.state.isLoaded)
       return (
         <React.Fragment>
-          <div className="row justify-content-end px-4 pt-4">
-            <div className="col-6 col-md-3 float-right">
-              <input
-                type="text"
-                className="form-control form-control-sm"
-                placeholder="Search..."
-                onKeyUp={this.updateSearchCriteria}
-              />
-            </div>
-          </div>
+          <SearchBox updateSearchCriteria={this.updateSearchCriteria} />
           <div className="p-5">
             <Loader />
           </div>
@@ -111,16 +102,7 @@ class List extends Component {
       );
     return (
       <React.Fragment>
-        <div className="row justify-content-end px-4 pt-4">
-          <div className="col-6 col-md-3 float-right">
-            <input
-              type="text"
-              className="form-control form-control-sm"
-              placeholder="Search..."
-              onKeyUp={this.updateSearchCriteria}
-            />
-          </div>
-        </div>
+        <SearchBox updateSearchCriteria={this.updateSearchCriteria} />
         <div className="p-4">
           <div className="row">
             {this.state.users.map((user) => (

@@ -1,5 +1,4 @@
 import BigNumber from 'bignumber.js';
-import $ from 'jquery';
 
 var P_OST = 5,
   P_OST_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP;
@@ -27,7 +26,7 @@ var oThis = {
       OST_TO_BT = String(config.ost_to_bt);
     }
 
-    $.extend(oThis, config);
+    Object.assign(oThis, config);
 
     oThis.ost_to_fiat && delete oThis.ost_to_fiat;
     oThis.ost_to_bt && delete oThis.ost_to_bt;
