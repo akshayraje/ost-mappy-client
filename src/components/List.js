@@ -10,6 +10,7 @@ import axios from 'axios';
 import Card from './Card';
 import { apiRoot } from '../constants';
 import { Loader, Error } from './Loader';
+import SearchBox from './SearchBox';
 
 /*
  * Module constants
@@ -24,7 +25,8 @@ class List extends Component {
       isLoaded: false,
       users: [],
       hasNext: false,
-      hasPrevious: false
+      hasPrevious: false,
+      searchText: ''
     };
     this.skip = 0;
   }
@@ -33,12 +35,12 @@ class List extends Component {
     this.getData();
   }
 
-  getData(skip = 0) {
+  getData = (skip = 0, searchCriteria = '') => {
     this.setState({
       isLoaded: false
     });
     axios
-      .get(`${apiRoot}api/users?limit=${LIMIT}&skip=${skip}`)
+      .get(`${apiRoot}api/users?limit=${LIMIT}&skip=${skip}&un=${searchCriteria}`)
       .then((res) => {
         const users = res.data['users'];
         this.setState({
@@ -63,17 +65,27 @@ class List extends Component {
           isLoaded: true
         });
       });
-  }
+  };
 
   next = () => {
     if (this.state.hasNext) {
-      this.getData(this.skip + LIMIT);
+      this.getData(this.skip + LIMIT, this.state.searchText);
     }
   };
 
   previous = () => {
     if (this.state.hasPrevious) {
-      this.getData(this.skip - LIMIT);
+      this.getData(this.skip - LIMIT, this.state.searchText);
+    }
+  };
+
+  updateSearchCriteria = (event) => {
+    let value = event.target.value;
+    this.setState({
+      searchText: value
+    });
+    if (event.key === 'Enter') {
+      this.getData(0, value);
     }
   };
 
@@ -81,33 +93,38 @@ class List extends Component {
     if (this.state.error) return <Error message={this.state.error.message} />;
     if (!this.state.isLoaded)
       return (
-        <div className="p-5">
-          <Loader />
-        </div>
+        <React.Fragment>
+          <SearchBox updateSearchCriteria={this.updateSearchCriteria} />
+          <div className="p-5">
+            <Loader />
+          </div>
+        </React.Fragment>
       );
-    if (this.state.isLoaded && this.state.users.length === 0) return <Error message="No users found" />;
     return (
-      <div className="p-4">
-        <div className="row">
-          {this.state.users.map((user) => (
-            <Card key={user._id} user={user} />
-          ))}
+      <React.Fragment>
+        <SearchBox updateSearchCriteria={this.updateSearchCriteria} />
+        <div className="p-4">
+          <div className="row">
+            {this.state.users.map((user) => (
+              <Card key={user._id} user={user} />
+            ))}
+          </div>
+          <nav aria-label="User navigation">
+            <ul className="pagination justify-content-end pt-3">
+              <li className={`page-item ${!this.state.hasPrevious ? 'disabled' : ''}`}>
+                <span className="page-link" onClick={this.previous}>
+                  &laquo;
+                </span>
+              </li>
+              <li className={`page-item ${!this.state.hasNext ? 'disabled' : ''}`}>
+                <span className="page-link" onClick={this.next}>
+                  &raquo;
+                </span>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <nav aria-label="User navigation">
-          <ul className="pagination justify-content-end pt-3">
-            <li className={`page-item ${!this.state.hasPrevious ? 'disabled' : ''}`}>
-              <span className="page-link" onClick={this.previous}>
-                &laquo;
-              </span>
-            </li>
-            <li className={`page-item ${!this.state.hasNext ? 'disabled' : ''}`}>
-              <span className="page-link" onClick={this.next}>
-                &raquo;
-              </span>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      </React.Fragment>
     );
   }
 }
