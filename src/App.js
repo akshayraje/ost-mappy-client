@@ -5,7 +5,7 @@ import Header from './components/Header';
 import TxDetails from './components/TxDetails';
 import CustomData from './components/CustomData';
 import Devices from './components/Devices';
-import OST_BT_USD_calculator from './components/OST_BT_USD_calculator';
+import Token from './components/Token';
 
 const App = () => (
   <HashRouter basename={window.location.pathname}>
@@ -17,8 +17,8 @@ const App = () => (
             <Route exact path="/" component={List} />
             <Route path="/user/:userId/ost-users" component={TxDetails} />
             <Route path="/user/:userId/devices" component={Devices} />
-            <Route path="/custom" component={CustomData} />
-            <Route path="/calculator" component={OST_BT_USD_calculator} />
+            <Route path="/custom-transactions" component={CustomData} />
+            <Route path="/token" component={Token} />
           </div>
         </div>
       </div>

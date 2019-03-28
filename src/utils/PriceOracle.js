@@ -1,22 +1,22 @@
 import BigNumber from 'bignumber.js';
 
+const P_OST = 5;
+const P_OST_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP;
+const P_BT = 5;
+const P_BT_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP;
+const P_FIAT = 2;
+const P_FIAT_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP;
+
 class PriceOracle {
-  //private fields for internal use
-  P_OST = 5;
-  P_OST_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP;
-  P_BT = 5;
-  P_BT_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP;
-  P_FIAT = 2;
-  P_FIAT_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP;
-  OST_TO_FIAT = 1;
-  OST_TO_BT = 1;
+  ost_to_fiat = 1;
+  ost_to_bt = 1;
 
   constructor(config) {
     if (config.ost_to_fiat) {
-      this.OST_TO_FIAT = String(config.ost_to_fiat);
+      this.ost_to_fiat = String(config.ost_to_fiat);
     }
     if (config.ost_to_bt) {
-      this.OST_TO_BT = String(config.ost_to_bt);
+      this.ost_to_bt = String(config.ost_to_bt);
     }
   }
 
@@ -25,7 +25,7 @@ class PriceOracle {
 
     ost = BigNumber(ost);
 
-    let result = ost.multipliedBy(this.OST_TO_FIAT);
+    let result = ost.multipliedBy(this.ost_to_fiat);
 
     return this.toFiat(result);
   }
@@ -34,8 +34,8 @@ class PriceOracle {
     if (!bt) return '';
 
     bt = BigNumber(bt);
-    let fiatBN = BigNumber(this.OST_TO_FIAT),
-      oneBTToFiat = fiatBN.dividedBy(this.OST_TO_BT),
+    let fiatBN = BigNumber(this.ost_to_fiat),
+      oneBTToFiat = fiatBN.dividedBy(this.ost_to_bt),
       result = oneBTToFiat.multipliedBy(bt);
 
     return this.toFiat(result);
@@ -54,7 +54,7 @@ class PriceOracle {
 
     ost = BigNumber(ost);
 
-    let result = ost.multipliedBy(this.OST_TO_BT);
+    let result = ost.multipliedBy(this.ost_to_bt);
 
     return this.toBT(result);
   }
@@ -72,7 +72,7 @@ class PriceOracle {
 
     bt = BigNumber(bt);
 
-    let result = bt.dividedBy(this.OST_TO_BT);
+    let result = bt.dividedBy(this.ost_to_bt);
 
     return this.toOst(result);
   }
@@ -99,7 +99,7 @@ class PriceOracle {
       return '';
     }
     bt = BigNumber(bt);
-    return bt.toFixed(this.P_BT, this.P_BT_ROUND_ROUNDING_MODE);
+    return bt.toFixed(P_BT, P_BT_ROUND_ROUNDING_MODE);
   }
 
   toOst(ost) {
@@ -117,7 +117,7 @@ class PriceOracle {
       return '';
     }
     ost = BigNumber(ost);
-    return ost.toFixed(this.P_OST, this.P_OST_ROUND_ROUNDING_MODE);
+    return ost.toFixed(P_OST, P_OST_ROUND_ROUNDING_MODE);
   }
 
   toFiat(fiat) {
@@ -138,7 +138,7 @@ class PriceOracle {
 
     fiat = BigNumber(fiat);
     var precession = this.getFiatPrecession();
-    return fiat.toFixed(precession, this.P_FIAT_ROUND_ROUNDING_MODE);
+    return fiat.toFixed(precession, P_FIAT_ROUND_ROUNDING_MODE);
   }
 
   fromWei(val) {
@@ -162,16 +162,16 @@ class PriceOracle {
   }
 
   getOstPrecession() {
-    return this.P_OST;
+    return P_OST;
   }
 
   //Keeping FIAT precession as configurable as it can be asked for
   getFiatPrecession() {
-    return this.P_FIAT || this.P_FIAT;
+    return P_FIAT || P_FIAT;
   }
 
   getBtPrecession() {
-    return this.P_BT;
+    return P_BT;
   }
 
   //Private method START
@@ -188,10 +188,9 @@ class PriceOracle {
   }
 
   __toWei__(val) {
-    var oThis = this,
-      exp;
+    let exp;
 
-    if (oThis.isNaN(val)) {
+    if (this.isNaN(val)) {
       return NaN;
     }
 
