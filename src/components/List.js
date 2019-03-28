@@ -55,6 +55,7 @@ class List extends Component {
           });
         } else {
           this.setState({
+            users: [],
             hasNext: false
           });
         }
