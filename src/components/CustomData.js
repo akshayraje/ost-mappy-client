@@ -154,14 +154,15 @@ class CustomData extends Component {
   };
 
   render() {
-    if (this.state.error) return <Error message={this.state.error.message} />;
+    if (this.state.error) return <Error class="alert-danger" message={this.state.error.message} />;
     if (!this.state.isLoaded)
       return (
         <div className="p-5">
           <Loader />
         </div>
       );
-    if (this.state.isLoaded && this.state.filteredUsers.length === 0) return <Error message="No users found" />;
+    if (this.state.isLoaded && this.state.filteredUsers.length === 0)
+      return <Error class="alert-light" message="No users found!" />;
 
     return (
       <div>

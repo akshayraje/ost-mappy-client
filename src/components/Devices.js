@@ -60,7 +60,7 @@ class Devices extends Component {
   };
 
   render() {
-    if (this.state.error) return <Error message={this.state.error.message} />;
+    if (this.state.error) return <Error class="alert-danger" message={this.state.error.message} />;
     if (!this.state.isLoaded)
       return (
         <div className="p-4">

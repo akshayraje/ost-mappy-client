@@ -91,7 +91,7 @@ class List extends Component {
   };
 
   render() {
-    if (this.state.error) return <Error message={this.state.error.message} />;
+    if (this.state.error) return <Error class="alert-danger" message={this.state.error.message} />;
     if (!this.state.isLoaded)
       return (
         <React.Fragment>
@@ -99,6 +99,13 @@ class List extends Component {
           <div className="p-5">
             <Loader />
           </div>
+        </React.Fragment>
+      );
+    if (this.state.isLoaded && this.state.users.length === 0)
+      return (
+        <React.Fragment>
+          <SearchBox updateSearchCriteria={this.updateSearchCriteria} />
+          <Error class="alert-light" message="No users found!" />
         </React.Fragment>
       );
     return (

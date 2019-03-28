@@ -65,8 +65,7 @@ export default class Token extends Component {
   };
 
   render() {
-    console.log(this);
-    if (this.state.error) return <Error message={this.state.error.message} />;
+    if (this.state.error) return <Error class="alert-danger" message={this.state.error.message} />;
     if (!this.state.isLoaded)
       return (
         <React.Fragment>
@@ -108,6 +107,7 @@ export default class Token extends Component {
                   <td>
                     <a
                       target="_blank"
+                      rel="noopener noreferrer"
                       href={`https://ropsten.etherscan.io/address/${this.state.tokenDetails.origin_chain &&
                         this.state.tokenDetails.origin_chain.branded_token}`}
                     >
