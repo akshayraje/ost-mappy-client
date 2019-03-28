@@ -26,13 +26,16 @@ export default class Token extends Component {
       .then((res) => {
         this.ost_to_fiat_conversion_ratio = res.data && res.data['price_points']['price_point']['OST']['USD'];
         this.ost_to_bt_conversion_ratio = res.data && res.data['token']['conversion_factor'];
+        this.decimals = res.data && res.data['token']['decimals'];
+        this.priceOracle = new PriceOracle({
+          ost_to_fiat: this.ost_to_fiat_conversion_ratio,
+          ost_to_bt: this.ost_to_bt_conversion_ratio,
+          decimals: this.decimals
+        });
+        this.priceOracle.fromWei.bind(this.priceOracle);
         this.setState({
           tokenDetails: res.data && res.data['token'],
           isLoaded: true
-        });
-        this.priceOracle = new PriceOracle({
-          ost_to_fiat: this.ost_to_fiat_conversion_ratio,
-          ost_to_bt: this.ost_to_bt_conversion_ratio
         });
       })
       .catch((err) => {
@@ -62,6 +65,7 @@ export default class Token extends Component {
   };
 
   render() {
+    console.log(this);
     if (this.state.error) return <Error message={this.state.error.message} />;
     if (!this.state.isLoaded)
       return (
@@ -79,20 +83,18 @@ export default class Token extends Component {
             <table className="table mt-4">
               <tbody>
                 <tr>
-                  <th scope="row">Id</th>
+                  <th scope="row">Token ID</th>
                   <td>{this.state.tokenDetails.id}</td>
                 </tr>
                 <tr>
-                  <th scope="row">Name</th>
-                  <td>{this.state.tokenDetails.name}</td>
-                </tr>
-                <tr>
-                  <th scope="row">Symbol</th>
-                  <td>{this.state.tokenDetails.symbol}</td>
+                  <th scope="row">Name, Symbol</th>
+                  <td>
+                    {this.state.tokenDetails.name} ({this.state.tokenDetails.symbol})
+                  </td>
                 </tr>
                 <tr>
                   <th scope="row">Total supply</th>
-                  <td>{this.state.tokenDetails.total_supply}</td>
+                  <td>{this.priceOracle.fromWei(this.state.tokenDetails.total_supply)}</td>
                 </tr>
                 <tr>
                   <th scope="row">Utility branded token contract</th>
@@ -103,7 +105,15 @@ export default class Token extends Component {
                 </tr>
                 <tr>
                   <th scope="row">Value branded token contract</th>
-                  <td>{this.state.tokenDetails.origin_chain && this.state.tokenDetails.origin_chain.branded_token}</td>
+                  <td>
+                    <a
+                      target="_blank"
+                      href={`https://ropsten.etherscan.io/address/${this.state.tokenDetails.origin_chain &&
+                        this.state.tokenDetails.origin_chain.branded_token}`}
+                    >
+                      {this.state.tokenDetails.origin_chain && this.state.tokenDetails.origin_chain.branded_token}
+                    </a>
+                  </td>
                 </tr>
               </tbody>
             </table>

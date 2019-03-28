@@ -1,11 +1,12 @@
 import BigNumber from 'bignumber.js';
 
-const P_OST = 5;
-const P_OST_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP;
-const P_BT = 5;
-const P_BT_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP;
-const P_FIAT = 2;
-const P_FIAT_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP;
+const P_OST = 5,
+  P_OST_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP,
+  P_BT = 5,
+  P_BT_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP,
+  P_FIAT = 2,
+  P_FIAT_ROUND_ROUNDING_MODE = BigNumber.ROUND_HALF_UP,
+  P_DECIMALS = 18;
 
 class PriceOracle {
   ost_to_fiat = 1;
@@ -17,6 +18,10 @@ class PriceOracle {
     }
     if (config.ost_to_bt) {
       this.ost_to_bt = String(config.ost_to_bt);
+    }
+    this.decimals = P_DECIMALS;
+    if (config.decimals) {
+      this.decimals = config.decimals;
     }
   }
 
@@ -142,19 +147,11 @@ class PriceOracle {
   }
 
   fromWei(val) {
-    if (window.web3) {
-      return window.web3.fromWei(val);
-    } else {
-      return this.__fromWei__(val);
-    }
+    return this.__fromWei__(val);
   }
 
   toWei(val) {
-    if (window.web3) {
-      return window.web3.toWei(val);
-    } else {
-      return this.__toWei__(val);
-    }
+    return this.__toWei__(val);
   }
 
   isNaN(val) {
@@ -183,7 +180,7 @@ class PriceOracle {
     }
 
     val = BigNumber(val);
-    exp = BigNumber(10).exponentiatedBy(18);
+    exp = BigNumber(10).exponentiatedBy(this.decimals);
     return val.dividedBy(exp).toString(10);
   }
 
@@ -195,7 +192,7 @@ class PriceOracle {
     }
 
     val = BigNumber(val);
-    exp = BigNumber(10).exponentiatedBy(18);
+    exp = BigNumber(10).exponentiatedBy(this.decimals);
     return val.multipliedBy(exp).toString(10);
   }
   //Private method END
