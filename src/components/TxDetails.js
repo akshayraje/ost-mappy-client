@@ -29,7 +29,7 @@ class TxDetails extends Component {
       isLoaded: false
     });
     axios
-      .get(`${apiRoot}api/users/${this.props.match.params.userId}/ost-users`)
+      .get(`${window.apiRoot || apiRoot}api/users/${this.props.match.params.userId}/ost-users`)
       .then((res) => {
         this.setState({
           user: res.data,

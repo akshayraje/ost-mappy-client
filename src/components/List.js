@@ -40,7 +40,7 @@ class List extends Component {
       isLoaded: false
     });
     axios
-      .get(`${apiRoot}api/users?limit=${LIMIT}&skip=${skip}&un=${searchCriteria}`)
+      .get(`${window.apiRoot || apiRoot}api/users?limit=${LIMIT}&skip=${skip}&un=${searchCriteria}`)
       .then((res) => {
         const users = res.data['users'];
         this.setState({

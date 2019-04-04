@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { apiRoot } from '../constants';
 
 const Header = () => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -37,7 +38,14 @@ const Header = () => (
         </li>
       </ul>
       <div className="my-2">
-        <span className="badge badge-primary font-weight-light text-monospace">{process.env.REACT_APP_API_ROOT}</span>
+        <span
+          className="badge badge-primary font-weight-light text-monospace"
+          onClick={() => {
+            window.apiRoot = prompt('Enter API root URL:') || window.apiRoot || apiRoot;
+          }}
+        >
+          {window.apiRoot || apiRoot}
+        </span>
       </div>
     </div>
   </nav>

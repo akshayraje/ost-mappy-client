@@ -27,7 +27,7 @@ class Devices extends Component {
       isLoaded: false
     });
     axios
-      .get(`${apiRoot}api/users/${this.props.match.params.userId}/devices`)
+      .get(`${window.apiRoot || apiRoot}api/users/${this.props.match.params.userId}/devices`)
       .then((res) => {
         this.setState({
           addresses: res.data,

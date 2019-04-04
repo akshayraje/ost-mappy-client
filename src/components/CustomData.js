@@ -71,7 +71,7 @@ class CustomData extends Component {
     this.setState({ isLoaded: false });
     let filteredUsers = [];
     axios
-      .get(`${apiRoot}api/users`)
+      .get(`${window.apiRoot || apiRoot}api/users`)
       .then((res) => {
         const users = res.data['users'];
         if (users.length > 0) {
@@ -102,7 +102,7 @@ class CustomData extends Component {
   handleUserChange = (event) => {
     let userId = event.target.value;
     axios
-      .get(`${apiRoot}api/users/${userId}/ost-users`)
+      .get(`${window.apiRoot || apiRoot}api/users/${userId}/ost-users`)
       .then((res) => {
         this.setState({
           currentTokenId: res.data && res.data.token_id,

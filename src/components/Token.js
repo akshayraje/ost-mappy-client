@@ -22,7 +22,7 @@ export default class Token extends Component {
 
   componentDidMount() {
     axios
-      .get(`${apiRoot}api/token`)
+      .get(`${window.apiRoot || apiRoot}api/token`)
       .then((res) => {
         this.ost_to_fiat_conversion_ratio = res.data && res.data['price_points']['price_point']['OST']['USD'];
         this.ost_to_bt_conversion_ratio = res.data && res.data['token']['conversion_factor'];
