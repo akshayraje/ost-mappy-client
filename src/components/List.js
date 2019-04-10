@@ -40,9 +40,7 @@ class List extends Component {
       isLoaded: false
     });
     axios
-      .get(
-        `/demo/api/1003/7d1b32962409e8b24f09245bc44c51b3c7fe590377402620cf30fe5a4ffc553b/users?page=${LIMIT}&q=${searchCriteria}`
-      )
+      .get(`${window.apiRoot || apiRoot}users?page=${LIMIT}&q=${searchCriteria}`)
       .then((res) => {
         const users = res.data.data[res.data.data.result_type];
         this.setState({
@@ -116,7 +114,7 @@ class List extends Component {
         <div className="p-4">
           <div className="row">
             {this.state.users.map((user) => (
-              <Card key={user._id} user={user} />
+              <Card key={user.user_id} user={user} />
             ))}
           </div>
           <nav aria-label="User navigation">
