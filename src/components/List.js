@@ -15,7 +15,7 @@ import SearchBox from './SearchBox';
 /*
  * Module constants
  */
-const LIMIT = 1;
+const USER_COUNT = 25;
 
 class List extends Component {
   constructor(props) {
@@ -28,30 +28,29 @@ class List extends Component {
       hasPrevious: false,
       searchText: ''
     };
-    this.skip = 0;
   }
 
   componentDidMount() {
     this.getData();
   }
 
-  getData = (skip = 0, searchCriteria = '') => {
+  getData = (page = 1, searchCriteria = '') => {
     this.setState({
       isLoaded: false
     });
     axios
-      .get(`${window.apiRoot || apiRoot}users?page=${LIMIT}&q=${searchCriteria}`)
+      .get(`${window.apiRoot || apiRoot}users?page=${page}&q=${searchCriteria}`)
       .then((res) => {
         const users = res.data.data[res.data.data.result_type];
+        this.page = page;
         this.setState({
           isLoaded: true,
-          hasPrevious: skip > 0
+          hasPrevious: page > 1
         });
         if (users.length > 0) {
-          this.skip = skip;
           this.setState({
             users,
-            hasNext: !(users.length < LIMIT || users.length === 0)
+            hasNext: !(users.length < USER_COUNT || users.length === 0)
           });
         } else {
           this.setState({
@@ -70,13 +69,13 @@ class List extends Component {
 
   next = () => {
     if (this.state.hasNext) {
-      this.getData(this.skip + LIMIT, this.state.searchText);
+      this.getData(this.page + 1, this.state.searchText);
     }
   };
 
   previous = () => {
     if (this.state.hasPrevious) {
-      this.getData(this.skip - LIMIT, this.state.searchText);
+      this.getData(this.page - 1, this.state.searchText);
     }
   };
 
@@ -86,7 +85,7 @@ class List extends Component {
       searchText: value
     });
     if (event.key === 'Enter') {
-      this.getData(0, value);
+      this.getData(1, value);
     }
   };
 
@@ -101,7 +100,7 @@ class List extends Component {
           </div>
         </React.Fragment>
       );
-    if (this.state.isLoaded && this.state.users.length === 0)
+    if (this.searchText && this.state.isLoaded && this.state.users.length === 0)
       return (
         <React.Fragment>
           <SearchBox updateSearchCriteria={this.updateSearchCriteria} />
