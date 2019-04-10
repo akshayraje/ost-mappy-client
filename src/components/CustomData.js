@@ -71,9 +71,9 @@ class CustomData extends Component {
     this.setState({ isLoaded: false });
     let filteredUsers = [];
     axios
-      .get(`${window.apiRoot || apiRoot}api/users`)
+      .get(`${window.apiRoot || apiRoot}users`)
       .then((res) => {
-        const users = res.data['users'];
+        const users = res.data.data.users;
         if (users.length > 0) {
           users.forEach(function(user, userIndex) {
             if (user.token_holder_address) {
@@ -100,17 +100,15 @@ class CustomData extends Component {
   };
 
   handleUserChange = (event) => {
-    let userId = event.target.value;
-    axios
-      .get(`${window.apiRoot || apiRoot}api/users/${userId}/ost-users`)
-      .then((res) => {
-        this.setState({
-          currentTokenId: res.data && res.data.token_id,
-          currentUserId: userId,
-          QRSeed: this.getQRCodeData()
-        });
-      })
-      .catch((err) => {});
+    let userID = event.target.value,
+      user = this.state.filteredUsers.find(function(user) {
+        return user.user_id === userID;
+      });
+    this.setState({
+      currentTokenId: user.token_id,
+      currentUserId: userID,
+      QRSeed: this.getQRCodeData()
+    });
   };
 
   handleAddressChange = (address, index) => {
@@ -178,8 +176,8 @@ class CustomData extends Component {
               >
                 <option />
                 {this.state.filteredUsers.map((user) => (
-                  <option value={user._id} key={user._id}>
-                    {user.username}
+                  <option value={user.user_id} key={user.user_id}>
+                    {user.fullname}
                   </option>
                 ))}
               </select>

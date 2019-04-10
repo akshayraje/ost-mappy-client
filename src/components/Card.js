@@ -21,10 +21,10 @@ class Card extends Component {
             <h5 className="card-title text-truncate">{this.props.user.fullname}</h5>
             {this.props.user.token_holder_address ? (
               <React.Fragment>
-                <Link className="btn btn-light mr-2" to={`/user/${this.props.user._id}/ost-users`}>
+                <Link className="btn btn-light mr-2" to={`/user/${this.props.user.user_id}/ost-users`}>
                   Tx QR
                 </Link>
-                <Link className="btn btn-light" to={`/user/${this.props.user._id}/devices`}>
+                <Link className="btn btn-light" to={`/user/${this.props.user.user_id}/devices`}>
                   Devices QR
                 </Link>
               </React.Fragment>
