@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
+  "proxy": "http://172.16.0.62:3000/",
   "dependencies": {
     "axios": "^0.18.0",
     "bignumber.js": "^8.1.1",

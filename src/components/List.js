@@ -15,7 +15,7 @@ import SearchBox from './SearchBox';
 /*
  * Module constants
  */
-const LIMIT = 8;
+const LIMIT = 1;
 
 class List extends Component {
   constructor(props) {
@@ -40,9 +40,11 @@ class List extends Component {
       isLoaded: false
     });
     axios
-      .get(`${window.apiRoot || apiRoot}api/users?limit=${LIMIT}&skip=${skip}&un=${searchCriteria}`)
+      .get(
+        `/demo/api/1003/7d1b32962409e8b24f09245bc44c51b3c7fe590377402620cf30fe5a4ffc553b/users?page=${LIMIT}&q=${searchCriteria}`
+      )
       .then((res) => {
-        const users = res.data['users'];
+        const users = res.data.data[res.data.data.result_type];
         this.setState({
           isLoaded: true,
           hasPrevious: skip > 0
