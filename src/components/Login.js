@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import AuthService from '../services/AuthService';
-import cookie from 'react-cookies';
+import { Redirect } from 'react-router-dom';
 
 export default class Login extends Component {
   constructor() {
     super();
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      redirect: false
     };
     this.auth = AuthService;
   }
@@ -31,15 +32,19 @@ export default class Login extends Component {
       username: this.state.username,
       password: this.state.password
     };
-    this.auth.signIn(params, this.successCallback);
+    this.auth.signIn(params, this.successCallback, this.props.match.params.tokenId, this.props.match.params.urlId);
   };
 
   successCallback = () => {
-    cookie.save('fe_logIn', 'true');
-    this.props.history.push('/users');
+    this.setState({
+      redirect: true
+    });
   };
 
   render() {
+    if (this.state.redirect === true) {
+      return <Redirect to={`/${this.props.match.params.tokenId}/${this.props.match.params.urlId}/users`} />;
+    }
     return (
       <div className="container">
         <div className="row">

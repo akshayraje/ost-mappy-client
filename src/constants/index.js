@@ -50,6 +50,7 @@ const deviceMap = [
   }
 ];
 
-const apiRoot = process.env.REACT_APP_API_ROOT;
+//NOT USED
+//const apiRoot = process.env.REACT_APP_API_ROOT;
 
-export { dataMap, deviceMap, apiRoot };
+export { dataMap, deviceMap };

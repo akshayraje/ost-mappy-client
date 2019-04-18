@@ -9,44 +9,44 @@ import Devices from './components/Devices';
 import Token from './components/Token';
 import AuthService from './services/AuthService';
 
-function PrivateRoute({ component: Component, ...rest }) {
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        AuthService.getAuthStatus() ? (
-          <React.Fragment>
-            <Header />
-            <div className="container">
-              <div className="row">
-                <div className="col-12">
-                  <Component {...props} />
-                </div>
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      AuthService.getAuthStatus() ? (
+        <React.Fragment>
+          <Header />
+          <div className="container">
+            <div className="row">
+              <div className="col-12">
+                <Component {...props} />
               </div>
             </div>
-          </React.Fragment>
-        ) : (
-          <Redirect
-            to={{
-              pathname: '/',
-              state: { from: props.location }
-            }}
-          />
-        )
-      }
-    />
-  );
-}
+          </div>
+        </React.Fragment>
+      ) : (
+        <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+      )
+    }
+  />
+);
+
+const PublicRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) => (!AuthService.getAuthStatus() ? <Component {...props} {...rest} /> : <Redirect to="users" />)}
+  />
+);
 
 const App = () => (
   <HashRouter basename={window.location.pathname}>
     <React.Fragment>
-      <Route exact path="/" component={Login} />
-      <PrivateRoute path="/users" component={List} />
-      <PrivateRoute path="/user/:userId" component={TxDetails} />
-      <PrivateRoute path="/devices" component={Devices} />
-      <PrivateRoute path="/custom-transactions" component={CustomData} />
-      <PrivateRoute path="/token" component={Token} />
+      <PublicRoute exact path="/:tokenId/:urlId/" component={Login} />
+      <PrivateRoute path="/:tokenId/:urlId/users" component={List} />
+      <PrivateRoute path="/:tokenId/:urlId/user/:userId" component={TxDetails} />
+      <PrivateRoute path="/:tokenId/:urlId/devices" component={Devices} />
+      <PrivateRoute path="/:tokenId/:urlId/custom-transactions" component={CustomData} />
+      <PrivateRoute path="/:tokenId/:urlId/token" component={Token} />
     </React.Fragment>
   </HashRouter>
 );

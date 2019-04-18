@@ -8,9 +8,9 @@ import axios from 'axios';
  * Internal dependencies
  */
 import Card from './Card';
-import { apiRoot } from '../constants';
 import { Loader, Error } from './Loader';
 import SearchBox from './SearchBox';
+import URLPathService from '../services/URLPathService';
 
 /*
  * Module constants
@@ -38,8 +38,9 @@ class List extends Component {
     this.setState({
       isLoaded: false
     });
+    let baseURL = URLPathService.getBaseURL(this.props.match.params.tokenId, this.props.match.params.urlId);
     axios
-      .get(`${window.apiRoot || apiRoot}users?page=${page}&q=${searchCriteria}`)
+      .get(`${baseURL}users?page=${page}&q=${searchCriteria}`)
       .then((res) => {
         const users = res.data.data[res.data.data.result_type];
         this.page = page;

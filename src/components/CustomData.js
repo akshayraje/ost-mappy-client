@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import CustomDataItem from './CustomDataItem';
 import axios from 'axios/index';
-import { apiRoot, dataMap } from '../constants';
+import { dataMap } from '../constants';
 import QRCode from 'qrcode.react';
 import { Loader, Error } from './Loader';
 import CustomInputDataItem from './CustomInputDataItem';
+import URLPathService from '../services/URLPathService';
 
 const MAX_COUNT = 10,
   COUNT = 5;
@@ -69,9 +70,10 @@ class CustomData extends Component {
 
   getData = () => {
     this.setState({ isLoaded: false });
-    let filteredUsers = [];
+    let filteredUsers = [],
+      baseURL = URLPathService.getBaseURL(this.props.params.match.tokenId, this.props.params.match.urlId);
     axios
-      .get(`${window.apiRoot || apiRoot}users`)
+      .get(`${baseURL}users`)
       .then((res) => {
         const users = res.data.data.users;
         if (users.length > 0) {

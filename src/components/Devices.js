@@ -8,8 +8,9 @@ import axios from 'axios';
 /*
  * Internal dependencies
  */
-import { deviceMap, apiRoot } from '../constants';
+import { deviceMap } from '../constants';
 import { Loader, Error } from './Loader';
+import URLPathService from '../services/URLPathService';
 
 class Devices extends Component {
   constructor(props) {
@@ -26,8 +27,9 @@ class Devices extends Component {
     this.setState({
       isLoaded: false
     });
+    let baseURL = URLPathService.getBaseURL(this.props.params.match.tokenId, this.props.params.match.urlId);
     axios
-      .get(`${window.apiRoot || apiRoot}devices`)
+      .get(`${baseURL}devices`)
       .then((res) => {
         this.setState({
           addresses: res.data.data.devices,

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PriceOracle from '.././utils/PriceOracle';
 import axios from 'axios/index';
-import { apiRoot } from '../constants';
 import { Loader, Error } from './Loader';
+import URLPathService from '../services/URLPathService';
 
 export default class Token extends Component {
   constructor(props) {
@@ -21,8 +21,9 @@ export default class Token extends Component {
   }
 
   componentDidMount() {
+    let baseURL = URLPathService.getBaseURL(this.props.params.match.tokenId, this.props.params.match.urlId);
     axios
-      .get(`${window.apiRoot || apiRoot}token`)
+      .get(`${baseURL}token`)
       .then((res) => {
         if (res.data.success) {
           this.ost_to_fiat_conversion_ratio = res.data && res.data.data && res.data.data['price_point']['OST']['USD'];

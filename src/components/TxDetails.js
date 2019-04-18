@@ -8,8 +8,9 @@ import axios from 'axios';
 /*
  * Internal dependencies
  */
-import { dataMap, apiRoot } from '../constants';
+import { dataMap } from '../constants';
 import { Loader, Error } from './Loader';
+import URLPathService from '../services/URLPathService';
 
 class TxDetails extends Component {
   constructor(props) {
@@ -28,8 +29,9 @@ class TxDetails extends Component {
     this.setState({
       isLoaded: false
     });
+    let baseURL = URLPathService.getBaseURL(this.props.params.match.tokenId, this.props.params.match.urlId);
     axios
-      .get(`${window.apiRoot || apiRoot}users/${this.props.match.params.userId}`)
+      .get(`${baseURL}users/${this.props.match.params.userId}`)
       .then((res) => {
         this.setState({
           user: res.data.data,
