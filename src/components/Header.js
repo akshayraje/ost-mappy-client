@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { apiRoot } from '../constants';
+import AuthService from '../services/AuthService';
 
 const Header = () => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <Link className="navbar-brand" to="/">
+    <Link className="navbar-brand" to="/users">
       OST Mappy Client
     </Link>
     <button
@@ -22,7 +23,7 @@ const Header = () => (
     <div className="collapse navbar-collapse" id="menu">
       <ul className="navbar-nav mr-auto">
         <li className="nav-item">
-          <Link className="nav-link" to="/">
+          <Link className="nav-link" to="/users">
             Users
           </Link>
         </li>
@@ -45,6 +46,11 @@ const Header = () => (
           }}
         >
           {window.apiRoot || apiRoot}
+        </span>
+        <span onClick={AuthService.signOut}>
+          <Link className="btn btn-light btn-sm ml-2" to="/">
+            Sign out
+          </Link>
         </span>
       </div>
     </div>

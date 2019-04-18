@@ -27,11 +27,11 @@ class Devices extends Component {
       isLoaded: false
     });
     axios
-      .get(`${window.apiRoot || apiRoot}api/users/${this.props.match.params.userId}/devices`)
+      .get(`${window.apiRoot || apiRoot}devices`)
       .then((res) => {
         this.setState({
-          addresses: res.data,
-          currentAddress: res.data[0].address,
+          addresses: res.data.data.devices,
+          currentAddress: res.data.data.devices[0].address,
           isLoaded: true
         });
       })
@@ -90,7 +90,7 @@ class Devices extends Component {
               onChange={this.handleDeviceChange}
             >
               {this.state.addresses.map((device) => (
-                <option value={device.address} key={device.device_uuid}>
+                <option value={device.address} key={device.user_id}>
                   {device.address}
                 </option>
               ))}

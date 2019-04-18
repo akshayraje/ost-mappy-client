@@ -102,7 +102,7 @@ class CustomData extends Component {
   handleUserChange = (event) => {
     let userID = event.target.value,
       user = this.state.filteredUsers.find(function(user) {
-        return user.user_id === userID;
+        return user.app_user_id.toString() === userID;
       });
     this.setState({
       currentTokenId: user.token_id,
@@ -176,7 +176,7 @@ class CustomData extends Component {
               >
                 <option />
                 {this.state.filteredUsers.map((user) => (
-                  <option value={user.user_id} key={user.user_id}>
+                  <option value={user.app_user_id} key={user.app_user_id}>
                     {user.fullname}
                   </option>
                 ))}

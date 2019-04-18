@@ -113,7 +113,7 @@ class List extends Component {
         <div className="p-4">
           <div className="row">
             {this.state.users.map((user) => (
-              <Card key={user.user_id} user={user} />
+              <Card key={user.app_user_id} user={user} />
             ))}
           </div>
           <nav aria-label="User navigation">

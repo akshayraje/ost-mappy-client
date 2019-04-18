@@ -16,15 +16,15 @@ class Card extends Component {
     return (
       <div className={`${this.colClass} py-2`}>
         <div className="card shadow">
-          <svg className="card-img-top" data-jdenticon-value={this.props.user.user_id} />
+          <svg className="card-img-top" data-jdenticon-value={this.props.user.app_user_id} />
           <div className="card-body">
             <h5 className="card-title text-truncate">{this.props.user.fullname}</h5>
             {this.props.user.token_holder_address ? (
               <React.Fragment>
-                <Link className="btn btn-light mr-2" to={`/user/${this.props.user.user_id}/ost-users`}>
+                <Link className="btn btn-light mr-2" to={`/user/${this.props.user.app_user_id}`}>
                   Tx QR
                 </Link>
-                <Link className="btn btn-light" to={`/user/${this.props.user.user_id}/devices`}>
+                <Link className="btn btn-light" to={`/devices`}>
                   Devices QR
                 </Link>
               </React.Fragment>

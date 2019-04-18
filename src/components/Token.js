@@ -22,21 +22,28 @@ export default class Token extends Component {
 
   componentDidMount() {
     axios
-      .get(`${window.apiRoot || apiRoot}api/token`)
+      .get(`${window.apiRoot || apiRoot}token`)
       .then((res) => {
-        this.ost_to_fiat_conversion_ratio = res.data && res.data['price_points']['price_point']['OST']['USD'];
-        this.ost_to_bt_conversion_ratio = res.data && res.data['token']['conversion_factor'];
-        this.decimals = res.data && res.data['token']['decimals'];
-        this.priceOracle = new PriceOracle({
-          ost_to_fiat: this.ost_to_fiat_conversion_ratio,
-          ost_to_bt: this.ost_to_bt_conversion_ratio,
-          decimals: this.decimals
-        });
-        this.priceOracle.fromWei.bind(this.priceOracle);
-        this.setState({
-          tokenDetails: res.data && res.data['token'],
-          isLoaded: true
-        });
+        if (res.data.success) {
+          this.ost_to_fiat_conversion_ratio = res.data && res.data.data && res.data.data['price_point']['OST']['USD'];
+          this.ost_to_bt_conversion_ratio = res.data && res.data.data && res.data.data['token']['conversion_factor'];
+          this.decimals = res.data && res.data.data && res.data.data['token']['decimals'];
+          this.priceOracle = new PriceOracle({
+            ost_to_fiat: Number(this.ost_to_fiat_conversion_ratio),
+            ost_to_bt: Number(this.ost_to_bt_conversion_ratio),
+            decimals: Number(this.decimals)
+          });
+          this.priceOracle.fromWei.bind(this.priceOracle);
+          this.setState({
+            tokenDetails: res.data && res.data.data && res.data.data['token'],
+            isLoaded: true
+          });
+        } else {
+          this.setState({
+            error: res,
+            isLoaded: true
+          });
+        }
       })
       .catch((err) => {
         this.setState({
@@ -97,10 +104,7 @@ export default class Token extends Component {
                 </tr>
                 <tr>
                   <th scope="row">Utility branded token contract</th>
-                  <td>
-                    {this.state.tokenDetails.auxiliary_chains &&
-                      this.state.tokenDetails.auxiliary_chains[0].utility_branded_token}
-                  </td>
+                  <td>{this.state.tokenDetails.utility_branded_token_address}</td>
                 </tr>
                 <tr>
                   <th scope="row">Value branded token contract</th>
@@ -108,10 +112,11 @@ export default class Token extends Component {
                     <a
                       target="_blank"
                       rel="noopener noreferrer"
-                      href={`https://ropsten.etherscan.io/address/${this.state.tokenDetails.origin_chain &&
-                        this.state.tokenDetails.origin_chain.branded_token}`}
+                      href={`https://ropsten.etherscan.io/address/${
+                        this.state.tokenDetails.value_branded_token_address
+                      }`}
                     >
-                      {this.state.tokenDetails.origin_chain && this.state.tokenDetails.origin_chain.branded_token}
+                      {this.state.tokenDetails.value_branded_token_address}
                     </a>
                   </td>
                 </tr>
